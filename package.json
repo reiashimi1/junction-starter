@@ -33,19 +33,7 @@
     "react-multi-carousel": "^2.8.4",
     "react-pdf": "^7.7.1",
     "react-redux": "^9.0.4",
-    "validate.js": "^0.13.1"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.0.1",
-    "concurrently": "^8.2.2",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3",
-    "file-loader": "^6.2.0",
-    "nodemon": "^3.1.0",
-    "postcss": "^8",
-    "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.11",
-    "tailwindcss": "^3.4.1",
+    "validate.js": "^0.13.1",
     "@hapi/boom": "^10.0.1",
     "@hapi/glue": "^9.0.0",
     "@hapi/hapi": "^21.1.0",
@@ -66,5 +54,17 @@
     "pg-hstore": "^2.3.4",
     "rand-token": "^1.0.1",
     "sequelize": "^6.28.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.0.1",
+    "concurrently": "^8.2.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "file-loader": "^6.2.0",
+    "nodemon": "^3.1.0",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.1"
   }
 }
