@@ -1,7 +1,7 @@
 "use client";
 
 import Layout from "@/layouts/AdminLayout/Layout";
-import DataTable from "@/core/DataTable";
+import DataTable from "@/core/datatable/DataTable";
 import { useState } from "react";
 import AddButton from "@/core/buttons/AddButton";
 import API from "@/helpers/APIServices/API";

@@ -17,7 +17,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import { ChangeCircle, Visibility } from "@mui/icons-material";
 import API from "@/helpers/APIServices/API";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
-import DataTable from "@/core/DataTable";
+import DataTable from "@/core/datatable/DataTable";
 import RowData from "@/components/admin/RowData";
 import BackButton from "@/core/buttons/BackButton";
 import ChangeUserStatusPopUp from "@/components/users/ChangeUserStatusPopUp";

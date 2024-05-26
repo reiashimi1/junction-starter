@@ -4,7 +4,7 @@ import emptyLottie from "@/images/empty-lottie.json";
 import Lottie from "@/core/Lottie";
 import SearchInput from "@/core/inputs/SearchInput";
 import { isArrayEmpty } from "@/helpers/functions";
-import MobileDataTable from "@/core/MobileDataTable";
+import MobileDataTable from "@/core/datatable/MobileDataTable";
 
 const DataTable = ({
   rows = [],

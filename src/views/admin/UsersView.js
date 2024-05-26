@@ -1,7 +1,7 @@
 "use client";
 
 import Layout from "@/layouts/AdminLayout/Layout";
-import DataTable from "@/core/DataTable";
+import DataTable from "@/core/datatable/DataTable";
 import { useState } from "react";
 import API from "@/helpers/APIServices/API";
 import { ChangeCircle, Visibility } from "@mui/icons-material";

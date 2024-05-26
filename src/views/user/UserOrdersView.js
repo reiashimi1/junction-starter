@@ -1,7 +1,7 @@
 "use client";
 
 import Layout from "@/layouts/UserLayout/Layout";
-import DataTable from "@/core/DataTable";
+import DataTable from "@/core/datatable/DataTable";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
