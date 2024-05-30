@@ -1,5 +1,5 @@
 const Glue = require('@hapi/glue');
-const manifestConfig = require('./api/lib/manifest');
+const manifestConfig = require('./lib/manifest');
 
 (async () => {
     try {
