@@ -59,7 +59,7 @@ const RegisterData = ({ goNext }) => {
       phone_number: Number(phoneNumber),
       terms_services: agreeTerms,
     };
-    GuestAPI.post("/api/register", payload)
+    GuestAPI.post("/auth/register", payload)
       .then((response) => {
         goNext(email);
         dispatch(showSuccessToast("The code has been sent"));

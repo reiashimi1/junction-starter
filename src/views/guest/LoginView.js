@@ -41,7 +41,7 @@ const LoginView = () => {
     }
     dispatch(showLoader("Please wait"));
     const payload = { email, password };
-    GuestAPI.post("/api/login", payload)
+    GuestAPI.post("/auth/login", payload)
       .then((response) => {
         const { data, message } = response.data;
         dispatch(login(data));
