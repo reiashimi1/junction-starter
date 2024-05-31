@@ -16,20 +16,12 @@ const withoutAuth = (WrappedComponent) => {
     useEffect(() => {
       if (!!accessToken) {
         if (role === "admin") {
-          if (product != null) {
-            router.push(`/admin/products/view?id=${product}`);
-          } else {
-            router.push("/admin/");
-          }
-          // } else if (role === "guest") {
-        } else {
-          if (product != null) {
-            router.push(`/user/products/view?id=${product}`);
-          } else {
-            router.push("/user/products");
-          }
+          router.push("/admin");
+        } else if (role == "merchant") {
+          router.push("/merchant");
+        } else if (role === "user") {
+          router.push("/user");
         }
-        // TODO: What if role is no there, handle this case -- handled with comment above
       } else {
         dispatch(logout());
       }

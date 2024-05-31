@@ -16,8 +16,8 @@ const withAuth = (WrappedComponent) => {
         router.push("/login");
       } else if (role === "admin") {
         router.push("/admin");
-      } else if (role === "merchant") {
-        router.push("/merchant");
+      } else if (role === "user") {
+        router.push("/user");
       }
     }, [accessToken, router, dispatch, role]);
 
