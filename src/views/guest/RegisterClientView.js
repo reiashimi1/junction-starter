@@ -1,7 +1,7 @@
 "use client";
 
 import Layout from "@/layouts/GuestLayout/Layout";
-import RegisterData from "@/components/register/RegisterData";
+import RegisterClientData from "@/components/register/RegisterClientData";
 import CustomStepper from "@/core/CustomStepper";
 import OtpToken from "@/components/register/OtpToken";
 import RegisterSuccess from "@/components/register/RegisterSuccess";
@@ -9,7 +9,7 @@ import * as React from "react";
 import withoutAuth from "@/helpers/auth/guestWrapper";
 import { useState } from "react";
 
-const RegisterView = () => {
+const RegisterClientView = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [email, setEmail] = useState("");
 
@@ -39,7 +39,7 @@ const RegisterView = () => {
           <CustomStepper
             steps={[
               {
-                component: <RegisterData goNext={handleNext} />,
+                component: <RegisterClientData goNext={handleNext} />,
                 label: "Information",
               },
               {
@@ -66,4 +66,4 @@ const RegisterView = () => {
   );
 };
 
-export default withoutAuth(RegisterView);
+export default withoutAuth(RegisterClientView);

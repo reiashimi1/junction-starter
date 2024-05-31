@@ -28,16 +28,16 @@ const OtpToken = ({ goNext, goBack, email }) => {
       return;
     }
     const payload = { otp: code, email };
-    dispatch(showLoader("Please wait"));
-    GuestAPI.put("/api/otp/verify", payload)
-      .then((response) => {
+    // dispatch(showLoader("Please wait"));
+    // GuestAPI.put("/api/otp/verify", payload)
+    //   .then((response) => {
         goNext();
-        dispatch(showSuccessToast("Successfully registered"));
-      })
-      .catch((error) => {
-        dispatch(showErrorToast(error.response.data.message));
-      })
-      .finally(() => dispatch(hideLoader()));
+        // dispatch(showSuccessToast("Successfully registered"));
+      // })
+      // .catch((error) => {
+      //   dispatch(showErrorToast(error.response.data.message));
+      // })
+      // .finally(() => dispatch(hideLoader()));
   };
 
   return (

@@ -18,7 +18,7 @@ import SelectInput from "@/core/inputs/SelectInput";
 import { cities } from "@/helpers/constants";
 import CustomCheckbox from "@/core/inputs/CustomCheckbox";
 
-const RegisterData = ({ goNext }) => {
+const RegisterClientData = ({ goNext }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,22 +33,22 @@ const RegisterData = ({ goNext }) => {
   const dispatch = useDispatch();
 
   const handleNext = () => {
-    const errors = validateErrors(
-      {
-        name,
-        email,
-        birthday,
-        password,
-        confirmPassword,
-        city,
-        agreeTerms,
-      },
-      registerValidator,
-    );
-    if (errors) {
-      return;
-    }
-    dispatch(showLoader("Please wait"));
+    // const errors = validateErrors(
+    //   {
+    //     name,
+    //     email,
+    //     birthday,
+    //     password,
+    //     confirmPassword,
+    //     city,
+    //     agreeTerms,
+    //   },
+    //   registerValidator,
+    // );
+    // if (errors) {
+    //   return;
+    // }
+    // dispatch(showLoader("Please wait"));
     const payload = {
       name,
       email,
@@ -59,15 +59,15 @@ const RegisterData = ({ goNext }) => {
       phone_number: Number(phoneNumber),
       terms_services: agreeTerms,
     };
-    GuestAPI.post("/auth/register", payload)
-      .then((response) => {
+    // GuestAPI.post("/auth/register", payload)
+    //   .then((response) => {
         goNext(email);
-        dispatch(showSuccessToast("The code has been sent"));
-      })
-      .catch((error) => {
-        dispatch(showErrorToast(error.response.data.message));
-      })
-      .finally(() => dispatch(hideLoader()));
+        // dispatch(showSuccessToast("The code has been sent"));
+      // })
+      // .catch((error) => {
+      //   dispatch(showErrorToast(error.response.data.message));
+      // })
+      // .finally(() => dispatch(hideLoader()));
   };
 
   return (
@@ -191,4 +191,4 @@ const RegisterData = ({ goNext }) => {
   );
 };
 
-export default RegisterData;
+export default RegisterClientData;

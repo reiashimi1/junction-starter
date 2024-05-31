@@ -121,12 +121,20 @@ const LoginView = () => {
                 color="inherit"
                 className="flex flex-1"
               />
-              <LinkButton
-                text="Register"
-                href="/register"
-                color="inherit"
-                className="flex flex-1 justify-end"
-              />
+              <div className="flex flex-col space-y-2">
+                <LinkButton
+                  text="Register as client"
+                  href="/register/client"
+                  color="inherit"
+                  className="flex flex-1 justify-end"
+                />
+                <LinkButton
+                  text="Register as merchant"
+                  href="/register/merchant"
+                  color="inherit"
+                  className="flex flex-1 justify-end"
+                />
+              </div>
             </div>
           </form>
         </div>

@@ -4,9 +4,9 @@ import { Providers } from "@/app/GlobalRedux/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Cloud Ten VIP",
+  title: "GiraffEV",
   description:
-    "This is for an e-commerce website, named Cloud Ten VIP, that sells different products (e.g. vapes)",
+    "Plug your car. Charge to go far",
 };
 
 export default function RootLayout({ children }) {
