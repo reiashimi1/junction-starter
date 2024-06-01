@@ -58,7 +58,7 @@ const LandingPageViewTest = () => {
             textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
           }}
         >
-          Charge your car, plan your ride !
+          Charge your car, plan(t) your ride !
           <EvStationIcon color="success" fontSize="large" />
         </h3>
           <div style={{textAlign:"center", fontSize: "12px", marginTop: "10px"}}>
