@@ -90,30 +90,3 @@ export const ActiveStatusBadge = ({ status }) => {
       return <DefaultBadge label="N/A" color="default" />;
   }
 };
-
-export const prepareImagePath = (image) => `${API_URL}/${image}`;
-
-export const appendToPayload = (
-  payload,
-  key,
-  value,
-  previousValue,
-  image = false,
-  required = false,
-) => {
-  if (required) {
-    if (image && typeof value === "string") {
-      payload.append(key, previousValue);
-      return;
-    }
-    payload.append(key, value);
-    return;
-  }
-  if (value === previousValue) {
-    return;
-  }
-  if (image && typeof value === "string") {
-    return;
-  }
-  payload.append(key, value);
-};

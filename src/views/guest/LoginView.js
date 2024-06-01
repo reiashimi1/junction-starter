@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import PasswordInput from "@/core/inputs/PasswordInput";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/app/GlobalRedux/Features/authSlice";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
@@ -26,9 +26,6 @@ const LoginView = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const searchParams = useSearchParams();
-  const product = searchParams.get("product");
-
   const { clearError, getError, validateErrors } = useValidate();
 
   const onSubmitForm = (e) => {
@@ -49,11 +46,7 @@ const LoginView = () => {
         if (data?.user?.role === "admin") {
           router.push("/admin");
         } else {
-          if (product != null) {
-            router.push(`/user/products/${product}`);
-          } else {
-            router.push("/user/products");
-          }
+          router.push("/user/products");
         }
       })
       .catch((error) => {

@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomToggleButton from "@/core/buttons/CustomToggleButton";
 import { amountFormatter, isArrayEmpty } from "@/helpers/functions";
-import { paymentMethods } from "@/helpers/constants";
+// import { paymentMethods } from "@/helpers/constants";
 import useValidate from "@/hooks/useValidate";
-import makeOrderValidator from "@/helpers/validators/makeOrderValidator";
+// import makeOrderValidator from "@/helpers/validators/makeOrderValidator";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
 import {
@@ -22,7 +22,7 @@ const OrderDetails = ({ products, total }) => {
   const [fullName, setFullName] = useState("");
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
+  // const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
 
@@ -39,26 +39,26 @@ const OrderDetails = ({ products, total }) => {
   };
 
   const submitOrder = () => {
-    const errors = validateErrors(
-      {
-        paymentMethod,
-        address,
-        zipCode,
-        deliveryDate,
-        phoneNumber,
-      },
-      makeOrderValidator,
-    );
-    if (errors) {
-      return;
-    }
+    // const errors = validateErrors(
+    //   {
+    //     paymentMethod,
+    //     address,
+    //     zipCode,
+    //     deliveryDate,
+    //     phoneNumber,
+    //   },
+    //   makeOrderValidator,
+    // );
+    // if (errors) {
+    //   return;
+    // }
     const filteredProducts = products.map((product) => ({
       product_id: product.id,
       quantity: product.quantity,
     }));
     const payload = {
       products: filteredProducts,
-      payment_method: paymentMethod.value,
+      // payment_method: paymentMethod.value,
       zip_code: zipCode,
       delivery_time: deliveryDate,
       address,
@@ -78,10 +78,7 @@ const OrderDetails = ({ products, total }) => {
 
   const disableSubmitButton = useMemo(() => isArrayEmpty(products), [products]);
 
-  const amountWithDiscount = useMemo(
-    () => (paymentMethod.value === "cash" ? total * 0.9 : total),
-    [total, paymentMethod],
-  );
+  const amountWithDiscount = 10;
 
   useEffect(() => {
     // const currentDateAndTime = moment().format("YYYY-MM-DDTHH:mm");
@@ -99,10 +96,11 @@ const OrderDetails = ({ products, total }) => {
         Order details
       </div>
       <div className="my-5 flex items-center justify-center">
-        <CustomToggleButton
-          choices={paymentMethods}
-          onChange={setPaymentMethod}
-        />
+        toggle
+        {/*<CustomToggleButton*/}
+        {/*  choices={paymentMethods}*/}
+        {/*  onChange={setPaymentMethod}*/}
+        {/*/>*/}
       </div>
       <div className="flex flex-col">
         <div className="flex sm:flex-row flex-col my-4 sm:space-x-4 sm:space-y-0 space-y-4">
@@ -178,7 +176,7 @@ const OrderDetails = ({ products, total }) => {
         <div className="my-4 font-semibold text-green-800 text-lg text-center">
           Total Amount: {amountFormatter(total)}
         </div>
-        {paymentMethod.value === "cash" && !!total && (
+        {!!total && (
           <div className="flex space-x-2 items-center justify-center text-green-800 font-bold text-lg">
             <Tooltip
               title="Discount applied only for cash on delivery option"
