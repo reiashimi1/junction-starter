@@ -5,8 +5,9 @@ export const cities = [
 ];
 
 export const activeStatuses = [
-  { label: "Active", value: 1 },
-  { label: "Inactive", value: 0 },
+  { label: "Free", value: "free", color: "text-green-800" },
+  { label: "Occupied", value: "occupied", color: "text-orange-600" },
+  { label: "Not available", value: "notAvailable", color: "text-red-700" },
 ];
 
 export const userStatusesAdmin = [

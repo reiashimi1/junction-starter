@@ -9,10 +9,10 @@ import { activeStatuses } from "@/helpers/constants";
 import SelectInput from "@/core/inputs/SelectInput";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
 
-const ChangeProductStatusPopUp = ({
+const ChangeStationStatusPopUp = ({
   changeStatusPopUp,
   setChangeStatusPopUp,
-  selectedProduct,
+  selectedStation,
   onSuccess,
 }) => {
   const [status, setStatus] = useState(activeStatuses[0].value);
@@ -21,7 +21,7 @@ const ChangeProductStatusPopUp = ({
 
   const changeStatus = () => {
     dispatch(showLoader("Please wait"));
-    API.patch(`/api/admin/products/${selectedProduct.id}/change-status`)
+    API.patch(`/api/stations/${selectedStation.id}/change-status`)
       .then(() => {
         onSuccess();
         setChangeStatusPopUp(false);
@@ -31,19 +31,19 @@ const ChangeProductStatusPopUp = ({
   };
 
   const disableButton = useMemo(
-    () => status === selectedProduct.status,
-    [status, selectedProduct.status],
+    () => status === selectedStation.status,
+    [status, selectedStation.status],
   );
 
   useEffect(() => {
-    if (!!selectedProduct) {
-      setStatus(selectedProduct.status);
+    if (!!selectedStation) {
+      setStatus(selectedStation.status);
     }
-  }, [selectedProduct]);
+  }, [selectedStation]);
 
   return (
     <FormPopUp
-      title="Change product status"
+      title="Change station status"
       open={changeStatusPopUp}
       setOpen={setChangeStatusPopUp}
       handleSubmit={changeStatus}
@@ -67,4 +67,4 @@ const ChangeProductStatusPopUp = ({
   );
 };
 
-export default ChangeProductStatusPopUp;
+export default ChangeStationStatusPopUp;

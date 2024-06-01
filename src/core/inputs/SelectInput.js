@@ -3,6 +3,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Album } from "@mui/icons-material";
 
 const SelectInput = ({
   id,
@@ -49,6 +50,7 @@ const SelectInput = ({
           {/*</MenuItem>*/}
           {items.map((item) => (
             <MenuItem key={item.value} value={item.value}>
+              {!!item?.color && <Album className={`${item.color}`} />}
               {item.label}
             </MenuItem>
           ))}

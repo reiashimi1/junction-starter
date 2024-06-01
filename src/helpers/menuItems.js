@@ -33,6 +33,19 @@ export const userMenuItems = [
   },
 ];
 
+export const merchantMenuItems = [
+  {
+    label: "Dashboard",
+    route: "/user/products",
+    icon: <Inventory />,
+  },
+  {
+    label: "Stations",
+    route: "/user/orders",
+    icon: <ListAlt />,
+  },
+];
+
 export const adminMenuItems = [
   {
     label: "Home",
