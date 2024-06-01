@@ -14,7 +14,8 @@ import {
 import { isObjectEmpty } from "@/helpers/functions";
 import API from "@/helpers/APIServices/API";
 import SelectInput from "@/core/inputs/SelectInput";
-import { speedOptions } from "@/helpers/constants";
+import { socketOptions, speedOptions } from "@/helpers/constants";
+import chargePointValidator from "@/helpers/validators/chargePointValidator";
 
 const EditChargePointPopUp = ({
   chargePoint,
@@ -22,9 +23,8 @@ const EditChargePointPopUp = ({
   setEditPopUp,
   onSuccess,
 }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [speed, setSpeed] = useState("");
+  const [type, setType] = useState("");
+  // const [speed, setSpeed] = useState("");
   const [price, setPrice] = useState("");
   const [dynamicPrice, setDynamicPrice] = useState("");
   const [requests, setRequests] = useState("");
@@ -35,28 +35,26 @@ const EditChargePointPopUp = ({
   const editChargePoint = () => {
     const errors = validateErrors(
       {
-        name,
-        description,
-        speed,
+        type,
+        // speed,
         price,
-        dynamicPrice,
-        requests,
+        // dynamicPrice,
+        // requests,
       },
-      stationValidator,
+      chargePointValidator,
     );
     if (errors) {
       return;
     }
     const payload = {
-      name,
-      description,
-      speed,
+      type,
+      // speed,
       price,
       dynamicPrice,
       requests,
     };
     dispatch(showLoader("Please wait"));
-    API.post("/api/chargePoint/edit", payload)
+    API.put(`/merchants/${merchantId}/stations/${id}`, payload)
       .then(() => {
         dispatch(showSuccessToast("chargePoint edited successfully"));
         onSuccess();
@@ -70,9 +68,8 @@ const EditChargePointPopUp = ({
 
   useEffect(() => {
     if (!isObjectEmpty(chargePoint)) {
-      setName(chargePoint?.name);
-      setDescription(chargePoint?.description);
-      setSpeed(chargePoint?.speed);
+      // setSpeed(chargePoint?.speed);
+
       setPrice(chargePoint?.price);
       setDynamicPrice(chargePoint?.dynamicPrice);
       setRequests(chargePoint?.requests);
@@ -92,50 +89,25 @@ const EditChargePointPopUp = ({
     >
       <div className="flex flex-col space-y-8">
         <div className="flex sm:flex-row flex-col justify-between sm:space-x-4 sm:space-y-0 space-y-4">
+          <SelectInput
+            label="Type"
+            value={type}
+            onChange={setType}
+            id="type"
+            items={socketOptions}
+            minWidth="300"
+            className="flex flex-1"
+          />
           <CustomInput
-            label="Name"
-            placeholder="Enter name"
-            handleChange={(value) => clearError("name", value, setName)}
-            value={name}
-            error={getError("name")}
+            label="Price"
+            type="number"
+            placeholder="Enter starting price"
+            handleChange={(value) => clearError("price", value, setPrice)}
+            value={price}
+            error={getError("price")}
+            className="flex-1"
             required
-            className="flex-1"
           />
-          <CustomInput
-            label="Description"
-            placeholder="Enter description"
-            handleChange={(value) =>
-              clearError("description", value, setDescription)
-            }
-            value={description}
-            error={getError("description")}
-            multiline
-            className="flex-1"
-          />
-        </div>
-        <div className="flex md:flex-row flex-col justify-between md:space-x-4">
-          <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 sm:space-y-0 space-y-4 md:mt-0 -mt-2">
-            <SelectInput
-              label="Speed"
-              value={speed}
-              onChange={setSpeed}
-              id="speed"
-              items={speedOptions}
-              minWidth="300"
-              required
-              className="flex flex-1"
-            />
-            <CustomInput
-              label="Price"
-              type="number"
-              placeholder="Enter starting price"
-              handleChange={(value) => clearError("price", value, setPrice)}
-              value={price}
-              error={getError("price")}
-              className="flex-1"
-              required
-            />
-          </div>
         </div>
         <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 pb-4 sm:space-y-0 space-y-4 sm:pt-0 -pt-2">
           <CustomInput
@@ -147,7 +119,7 @@ const EditChargePointPopUp = ({
             }
             value={dynamicPrice}
             error={getError("dynamicPrice")}
-            required
+            // required
             className="flex-1"
           />
           <CustomInput
@@ -158,9 +130,19 @@ const EditChargePointPopUp = ({
             value={requests}
             error={getError("requests")}
             className="flex-1"
-            required
+            // required
           />
         </div>
+        {/*<SelectInput*/}
+        {/*  label="Socket"*/}
+        {/*  value={socket}*/}
+        {/*  onChange={setSocket}*/}
+        {/*  id="socket"*/}
+        {/*  items={socketOptions}*/}
+        {/*  minWidth="300"*/}
+        {/*  required*/}
+        {/*  className="flex flex-1"*/}
+        {/*/>*/}
       </div>
     </FormPopUp>
   );

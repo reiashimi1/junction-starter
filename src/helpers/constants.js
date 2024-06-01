@@ -1,7 +1,8 @@
 export const cities = [
-  { label: "Halifax", value: "Halifax" },
-  { label: "Dartmouth", value: "Dartmouth" },
-  { label: "Bedford", value: "Bedford" },
+  { label: "Tirana", value: "Tirana" },
+  { label: "Korca", value: "Korca" },
+  { label: "Fier", value: "Fier" },
+  { label: "Permet", value: "Permet" },
 ];
 
 export const activeStatuses = [
@@ -17,10 +18,15 @@ export const userStatusesAdmin = [
 ];
 
 const paymentMethods = [
-  { label: "All payments", value: "all"},
-  { label: "All payments", value: "all"},
-]
+  { label: "All payments", value: "all" },
+  { label: "All payments", value: "all" },
+];
 export const speedOptions = [
   { label: "20 kw/h", value: 20 },
   { label: "100 kw/h", value: 100 },
+];
+
+export const socketOptions = [
+  { label: "Normal", value: "normal" },
+  { label: "Fast", value: "fast" },
 ];

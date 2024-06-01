@@ -7,15 +7,15 @@ import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { amountFormatter} from "@/helpers/functions";
 import AddButton from "@/core/buttons/AddButton";
 import { IconButton, Tooltip } from "@mui/material";
-import {Delete, Edit, Visibility} from "@mui/icons-material";
+import { Delete, Edit, Visibility } from "@mui/icons-material";
 import AddStationPopUp from "@/components/merchants/AddStationPopUp";
 import EditStationPopUp from "@/components/merchants/EditStationPopUp";
 import DeleteStationPopUp from "@/components/merchants/DeleteStationPopUp";
+import withAuth from "@/helpers/auth/merchantWrapper";
 
 const MerchantStationsView = () => {
   const [stations, setStations] = useState([]);
@@ -26,6 +26,8 @@ const MerchantStationsView = () => {
   const [updated, setUpdated] = useState(0);
   const [selectedRow, setSelectedRow] = useState("");
 
+  const merchant = useSelector((state) => state?.authSlice?.user?.merchant);
+
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -35,12 +37,6 @@ const MerchantStationsView = () => {
       headerName: "Name",
       minWidth: 100,
       maxWidth: 200,
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      minWidth: 150,
-      maxWidth: 250,
     },
     {
       field: "latitude",
@@ -59,6 +55,12 @@ const MerchantStationsView = () => {
       headerName: "Charge points",
       minWidth: 80,
       maxWidth: 120,
+    },
+    {
+      field: "viewers",
+      headerName: "Viewers",
+      minWidth: 100,
+      maxWidth: 200,
     },
     {
       field: "actions",
@@ -105,19 +107,19 @@ const MerchantStationsView = () => {
   };
 
   const viewStationDetails = (selectedRow) => {
+    dispatch(showLoader("Please wait..."));
     router.push(`/merchant/stations/${selectedRow.id}`);
-  }
+  };
 
   const getStations = () => {
-    // dispatch(showLoader("Please wait..."));
-    // API.get(`/api/user/orders/${orderId}`)
-    //   .then((response) => {
-    //     const { order } = response.data;
-    //     setOrder(order);
-    setStations([{ id: 12, name: "test", description: "testtttt" }]);
-    // })
-    // .catch((e) => dispatch(showErrorToast(e.response.data.message)))
-    // .finally(() => dispatch(hideLoader()));
+    dispatch(showLoader("Please wait"));
+    API.get(`/merchants/${merchant?.id}/stations`)
+      .then((response) => {
+        const { stations } = response.data.data;
+        setStations(stations);
+      })
+      .catch(() => dispatch(showErrorToast("Could not get stations...")))
+      .finally(() => dispatch(hideLoader()));
   };
 
   return (
@@ -144,6 +146,7 @@ const MerchantStationsView = () => {
                     handleClick={() => setAddPopUp(true)}
                   />,
                 ]}
+                dependencies={[updated]}
                 totalCount={stations.length}
               />
             </div>
@@ -154,6 +157,7 @@ const MerchantStationsView = () => {
         <AddStationPopUp
           addPopUp={addPopUp}
           setAddPopUp={setAddPopUp}
+          merchantId={merchant?.id}
           onSuccess={updateData}
         />
       )}
@@ -162,6 +166,7 @@ const MerchantStationsView = () => {
           station={selectedRow}
           editPopUp={editPopUp}
           setEditPopUp={setEditPopUp}
+          merchantId={merchant?.id}
           onSuccess={updateData}
         />
       )}
@@ -170,6 +175,7 @@ const MerchantStationsView = () => {
           deletePopUp={deletePopUp}
           setDeletePopUp={setDeletePopUp}
           selectedRow={selectedRow}
+          merchantId={merchant?.id}
           onSuccess={updateData}
         />
       )}
@@ -177,4 +183,4 @@ const MerchantStationsView = () => {
   );
 };
 
-export default MerchantStationsView;
+export default withAuth(MerchantStationsView);

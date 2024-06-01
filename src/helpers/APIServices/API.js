@@ -1,7 +1,7 @@
 import Axios from "axios";
 import _ from "lodash";
 import { store } from "@/app/GlobalRedux/store";
-import { logout } from "@/app/GlobalRedux/Features/authSlice";
+import { logout, updateTokens } from "@/app/GlobalRedux/Features/authSlice";
 import { API_URL } from "@/helpers/APIServices/API_URL";
 
 let isTokenRefreshing = false;
@@ -74,14 +74,12 @@ API.interceptors.response.use(
       let refreshToken = _.get(state, "authSlice.refreshToken", null);
 
       return new Promise((resolve, reject) => {
-        API.post("/oauth/token/refresh", {
-          grant_type: "refresh_token",
-          refresh_token: refreshToken,
+        API.post("/auth/token", {
+          refreshToken: refreshToken,
         })
           .then((response) => {
-            console.log(response);
             const { dispatch } = store;
-            // dispatch(authenticate(auth));
+            dispatch(updateTokens(response.data.data.authentication));
             processFailedRequests(null, response.data.data.accessToken);
             resolve(API(originalRequest));
           })

@@ -9,10 +9,11 @@ import { activeStatuses } from "@/helpers/constants";
 import SelectInput from "@/core/inputs/SelectInput";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
 
-const ChangeStationStatusPopUp = ({
+const ChangeChargePointStatusPopUp = ({
   changeStatusPopUp,
   setChangeStatusPopUp,
-  selectedStation,
+  selectedRow,
+  merchantId,
   onSuccess,
 }) => {
   const [status, setStatus] = useState(activeStatuses[0].value);
@@ -21,7 +22,9 @@ const ChangeStationStatusPopUp = ({
 
   const changeStatus = () => {
     dispatch(showLoader("Please wait"));
-    API.patch(`/api/stations/${selectedStation.id}/change-status`)
+    API.patch(
+      `/merchant/${merchantId}/stations/${selectedRow.id}/change-status`,
+    )
       .then(() => {
         onSuccess();
         setChangeStatusPopUp(false);
@@ -30,16 +33,18 @@ const ChangeStationStatusPopUp = ({
       .finally(() => dispatch(hideLoader()));
   };
 
+  console.log(status);
+  console.log(selectedRow);
   const disableButton = useMemo(
-    () => status === selectedStation.status,
-    [status, selectedStation.status],
+    () => status === selectedRow?.status,
+    [status, selectedRow?.status],
   );
 
   useEffect(() => {
-    if (!!selectedStation) {
-      setStatus(selectedStation.status);
+    if (!!selectedRow) {
+      setStatus(selectedRow.status);
     }
-  }, [selectedStation]);
+  }, [selectedRow]);
 
   return (
     <FormPopUp
@@ -67,4 +72,4 @@ const ChangeStationStatusPopUp = ({
   );
 };
 
-export default ChangeStationStatusPopUp;
+export default ChangeChargePointStatusPopUp;
