@@ -6,16 +6,16 @@ import * as React from "react";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { amountFormatter } from "@/helpers/functions";
 import AddButton from "@/core/buttons/AddButton";
 import { IconButton, Tooltip } from "@mui/material";
 import { Delete, Edit, Visibility } from "@mui/icons-material";
 import AddStationPopUp from "@/components/merchants/AddStationPopUp";
 import EditStationPopUp from "@/components/merchants/EditStationPopUp";
 import DeleteStationPopUp from "@/components/merchants/DeleteStationPopUp";
+import withAuth from "@/helpers/auth/merchantWrapper";
 
 const MerchantStationsView = () => {
   const [stations, setStations] = useState([]);
@@ -107,6 +107,7 @@ const MerchantStationsView = () => {
   };
 
   const viewStationDetails = (selectedRow) => {
+    dispatch(showLoader("Please wait..."));
     router.push(`/merchant/stations/${selectedRow.id}`);
   };
 
@@ -182,4 +183,4 @@ const MerchantStationsView = () => {
   );
 };
 
-export default MerchantStationsView;
+export default withAuth(MerchantStationsView);

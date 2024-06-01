@@ -90,3 +90,16 @@ export const ActiveStatusBadge = ({ status }) => {
       return <DefaultBadge label="N/A" color="default" />;
   }
 };
+
+export const SocketType = ({ type }) => {
+  switch (type.toLowerCase()) {
+    case "normal":
+      return <DefaultBadge label={type} color="default" />;
+      break;
+    case "fast":
+      return <DefaultBadge label={type} color="info" />;
+      break;
+    default:
+      return <DefaultBadge label={type} color="default" />;
+  }
+};

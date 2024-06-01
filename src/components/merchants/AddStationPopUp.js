@@ -72,7 +72,7 @@ const AddStationPopUp = ({ addPopUp, setAddPopUp, merchantId, onSuccess }) => {
             className="flex-1"
           />
           <CustomInput
-            label="address"
+            label="Address"
             placeholder="Enter address"
             handleChange={(value) => clearError("address", value, setAddress)}
             value={address}

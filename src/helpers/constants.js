@@ -27,6 +27,6 @@ export const speedOptions = [
 ];
 
 export const socketOptions = [
-  { label: "bla bla", value: "bla" },
-  { label: "bla bla2", value: "bla2" },
+  { label: "Normal", value: "normal" },
+  { label: "Fast", value: "fast" },
 ];

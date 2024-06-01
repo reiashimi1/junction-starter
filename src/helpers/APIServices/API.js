@@ -78,9 +78,8 @@ API.interceptors.response.use(
           refreshToken: refreshToken,
         })
           .then((response) => {
-            console.log(response);
             const { dispatch } = store;
-            dispatch(updateTokens(response.data.data));
+            dispatch(updateTokens(response.data.data.authentication));
             processFailedRequests(null, response.data.data.accessToken);
             resolve(API(originalRequest));
           })
