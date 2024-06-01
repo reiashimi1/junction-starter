@@ -1,7 +1,8 @@
 export const cities = [
-  { label: "Halifax", value: "Halifax" },
-  { label: "Dartmouth", value: "Dartmouth" },
-  { label: "Bedford", value: "Bedford" },
+  { label: "Tirana", value: "Tirana" },
+  { label: "Korca", value: "Korca" },
+  { label: "Fier", value: "Fier" },
+  { label: "Permet", value: "Permet" },
 ];
 
 export const activeStatuses = [

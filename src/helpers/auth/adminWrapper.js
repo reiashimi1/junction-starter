@@ -6,6 +6,7 @@ import { logout } from "@/app/GlobalRedux/Features/authSlice";
 const withAuth = (WrappedComponent) => {
   const AuthComponent = (props) => {
     const accessToken = useSelector((state) => state?.authSlice?.accessToken);
+    const role = useSelector((state) => state?.authSlice?.user?.role);
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -13,6 +14,10 @@ const withAuth = (WrappedComponent) => {
       if (!accessToken) {
         dispatch(logout());
         router.push("/login");
+      } else if (role === "user") {
+        router.push("/user");
+      } else if (role === "merchant") {
+        router.push("/merchant");
       }
     }, [accessToken, dispatch, router]);
 

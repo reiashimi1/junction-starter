@@ -9,6 +9,7 @@ import Layout from "@/layouts/MerchantLayout/Layout";
 import { StackedLineChart } from "@mui/icons-material";
 import Statistic from "@/components/dashboard/Statistic";
 import { amountFormatter } from "@/helpers/functions";
+import withAuth from "@/helpers/auth/merchantWrapper";
 
 const series = [
   {
@@ -31,7 +32,7 @@ const series = [
   },
 ];
 
-export default function DashboardView() {
+const DashboardView = () => {
   return (
     <Layout>
       <div className="flex flex-col pt-24 pb-8 px-4 sm:mx-2">
@@ -44,16 +45,8 @@ export default function DashboardView() {
             <div>Orders and sales</div>
           </div>
           <div className="flex sm:flex-row flex-col items-center justify-center sm:space-x-4 sm:space-y-0 space-y-2 py-4">
-            <Statistic
-              label="Total stations"
-              value={10}
-              greenBgColor
-            />
-            <Statistic
-              label="Total sales"
-              value={12}
-              greenBgColor
-            />
+            <Statistic label="Total stations" value={10} greenBgColor />
+            <Statistic label="Total sales" value={12} greenBgColor />
             <Statistic
               label="Total revenue"
               value={amountFormatter(200)}
@@ -70,4 +63,6 @@ export default function DashboardView() {
       </div>
     </Layout>
   );
-}
+};
+
+export default withAuth(DashboardView);

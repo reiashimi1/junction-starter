@@ -12,62 +12,58 @@ import {
   showSuccessToast,
 } from "@/app/GlobalRedux/Features/toastSlice";
 import useValidate from "@/hooks/useValidate";
-import registerValidator from "@/helpers/validators/registerValidator";
+import registerClientValidator from "@/helpers/validators/registerClientValidator";
 import GuestAPI from "@/helpers/APIServices/GuestAPI";
-import SelectInput from "@/core/inputs/SelectInput";
-import { cities } from "@/helpers/constants";
-import CustomCheckbox from "@/core/inputs/CustomCheckbox";
+// import SelectInput from "@/core/inputs/SelectInput";
+// import { cities } from "@/helpers/constants";
+// import CustomCheckbox from "@/core/inputs/CustomCheckbox";
 
 const RegisterClientData = ({ goNext }) => {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [city, setCity] = useState(cities[0].value);
-  const [agreeTerms, setAgreeTerms] = useState(false);
+  // const [birthday, setBirthday] = useState("");
+  // const [phoneNumber, setPhoneNumber] = useState("");
+  // const [city, setCity] = useState(cities[0].value);
+  // const [agreeTerms, setAgreeTerms] = useState(false);
 
   const { clearError, getError, validateErrors } = useValidate();
 
   const dispatch = useDispatch();
 
   const handleNext = () => {
-    // const errors = validateErrors(
-    //   {
-    //     name,
-    //     email,
-    //     birthday,
-    //     password,
-    //     confirmPassword,
-    //     city,
-    //     agreeTerms,
-    //   },
-    //   registerValidator,
-    // );
-    // if (errors) {
-    //   return;
-    // }
-    // dispatch(showLoader("Please wait"));
+    goNext(email);
+    const errors = validateErrors(
+      {
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+      },
+      registerClientValidator,
+    );
+    if (errors) {
+      return;
+    }
+    dispatch(showLoader("Please wait"));
     const payload = {
-      name,
+      firstName,
+      lastName,
       email,
       password,
-      password_confirmation: confirmPassword,
-      birth_date: birthday,
-      city,
-      phone_number: Number(phoneNumber),
-      terms_services: agreeTerms,
     };
-    // GuestAPI.post("/auth/register", payload)
-    //   .then((response) => {
+    GuestAPI.post("/auth/register", payload)
+      .then((response) => {
         goNext(email);
-        // dispatch(showSuccessToast("The code has been sent"));
-      // })
-      // .catch((error) => {
-      //   dispatch(showErrorToast(error.response.data.message));
-      // })
-      // .finally(() => dispatch(hideLoader()));
+        dispatch(showSuccessToast("The code has been sent"));
+      })
+      .catch((error) => {
+        dispatch(showErrorToast(error.response.data.message));
+      })
+      .finally(() => dispatch(hideLoader()));
   };
 
   return (
@@ -77,18 +73,31 @@ const RegisterClientData = ({ goNext }) => {
         onSubmit={handleNext}
       >
         <h3 className="text-center mb-5 font-lg font-bold">
-          Register to Cloud Ten VIP
+          Register to GiraffEV as client
         </h3>
         <div className="w-full flex sm:flex-row flex-col justify-between sm:space-x-10 my-4 sm:space-y-0 space-y-4">
           <CustomInput
-            label="Full Name"
-            value={name}
-            placeholder="Enter full name"
-            error={getError("name")}
-            handleChange={(value) => clearError("name", value, setName)}
+            label="First Name"
+            value={firstName}
+            placeholder="Enter first name"
+            error={getError("firstName")}
+            handleChange={(value) =>
+              clearError("firstName", value, setFirstName)
+            }
             required
             className="flex-1"
           />
+          <CustomInput
+            label="Last Name"
+            value={lastName}
+            placeholder="Enter last name"
+            error={getError("lastName")}
+            handleChange={(value) => clearError("lastName", value, setLastName)}
+            required
+            className="flex-1"
+          />
+        </div>
+        <div className="w-full flex sm:flex-row flex-col justify-between sm:space-x-10 my-4 sm:space-y-0 space-y-4">
           <CustomInput
             label="Email"
             value={email}
@@ -123,61 +132,69 @@ const RegisterClientData = ({ goNext }) => {
             }
           />
         </div>
-        <div className="w-full flex sm:flex-row flex-col justify-between sm:space-x-10 mb-5 sm:mt-4 mt-0 sm:space-y-0 space-y-4">
-          <CustomInput
-            label="Birthday"
-            value={birthday}
-            type="date"
-            placeholder="Enter birthday"
-            error={getError("birthday")}
-            handleChange={(value) => clearError("birthday", value, setBirthday)}
-            className="flex-1"
-          />
-          <CustomInput
-            label="Phone number"
-            value={phoneNumber}
-            placeholder="Enter phone number"
-            error={getError("phoneNumber")}
-            type="number"
-            handleChange={(value) =>
-              clearError("phoneNumber", value, setPhoneNumber)
-            }
-            className="flex-1 appearance-none"
-          />
-        </div>
-        <div className="w-full flex sm:flex-row flex-col justify-between sm:space-x-10 mb-5 sm:mt-4 mt-0">
-          <SelectInput
-            label="City"
-            value={city}
-            onChange={setCity}
-            id="city"
-            items={cities}
-            minWidth="300"
-            required
-            className="flex flex-1"
-          />
-          <div className="flex flex-1 flex-col">
-            <CustomCheckbox
-              label="Agree to Terms and Conditions"
-              checked={agreeTerms}
-              onCheck={setAgreeTerms}
-              className="sm:mt-0 mt-4 sm:justify-start justify-center"
-            />
-            <div className="flex justify-end text-darkSlateBlue-800">
-              <LinkButton
-                text="Read here"
-                href="/terms-and-conditions"
-                variant="inherit"
-                className="justify-end"
-              />
-            </div>
-          </div>
-        </div>
+        {/*<div className="w-full flex sm:flex-row flex-col justify-between sm:space-x-10 mb-5 sm:mt-4 mt-0 sm:space-y-0 space-y-4">*/}
+        {/*  <CustomInput*/}
+        {/*    label="Birthday"*/}
+        {/*    value={birthday}*/}
+        {/*    type="date"*/}
+        {/*    placeholder="Enter birthday"*/}
+        {/*    error={getError("birthday")}*/}
+        {/*    handleChange={(value) => clearError("birthday", value, setBirthday)}*/}
+        {/*    className="flex-1"*/}
+        {/*  />*/}
+        {/*  <CustomInput*/}
+        {/*    label="Phone number"*/}
+        {/*    value={phoneNumber}*/}
+        {/*    placeholder="Enter phone number"*/}
+        {/*    error={getError("phoneNumber")}*/}
+        {/*    type="number"*/}
+        {/*    handleChange={(value) =>*/}
+        {/*      clearError("phoneNumber", value, setPhoneNumber)*/}
+        {/*    }*/}
+        {/*    className="flex-1 appearance-none"*/}
+        {/*  />*/}
+        {/*</div>*/}
+        {/*<div className="w-full flex sm:flex-row flex-col justify-between sm:space-x-10 mb-5 sm:mt-4 mt-0">*/}
+        {/*  <SelectInput*/}
+        {/*    label="City"*/}
+        {/*    value={city}*/}
+        {/*    onChange={setCity}*/}
+        {/*    id="city"*/}
+        {/*    items={cities}*/}
+        {/*    minWidth="300"*/}
+        {/*    required*/}
+        {/*    className="flex flex-1"*/}
+        {/*  />*/}
+        {/*  <div className="flex flex-1 flex-col">*/}
+        {/*    <CustomCheckbox*/}
+        {/*      label="Agree to Terms and Conditions"*/}
+        {/*      checked={agreeTerms}*/}
+        {/*      onCheck={setAgreeTerms}*/}
+        {/*      className="sm:mt-0 mt-4 sm:justify-start justify-center"*/}
+        {/*    />*/}
+        {/*    <div className="flex justify-end text-darkSlateBlue-800">*/}
+        {/*      <LinkButton*/}
+        {/*        text="Read here"*/}
+        {/*        href="/terms-and-conditions"*/}
+        {/*        variant="inherit"*/}
+        {/*        className="justify-end"*/}
+        {/*      />*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
         <LinkButton
           text="Already have an account? Click to log in."
           href="/login"
           className="flex flex-1 justify-end mt-12"
         />
+        <div className="flex justify-between w-full text-violet-900">
+          <LinkButton
+            text="Register as merchant"
+            href="/register/merchant"
+            color="inherit"
+            className="flex flex-1 justify-end"
+          />
+        </div>
       </form>
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
         <Box sx={{ flex: "1 1 auto" }} />
