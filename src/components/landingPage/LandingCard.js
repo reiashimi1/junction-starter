@@ -33,7 +33,7 @@ const LandingCard = () => {
           </h1>
           <div className="mt-10">
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
+            industry. Lorem Ipsum has been the industry standard dummy text
           </div>
           <div className="mt-16 flex justify-center">
             <button

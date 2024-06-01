@@ -5,12 +5,12 @@ import { useDispatch } from "react-redux";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
 import { ChangeCircle } from "@mui/icons-material";
-import { orderStatuses } from "@/helpers/constants";
+// import { orderStatuses } from "@/helpers/constants";
 import SelectInput from "@/core/inputs/SelectInput";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
 import CustomInput from "@/core/inputs/CustomInput";
 import useValidate from "@/hooks/useValidate";
-import changeOrderStatusValidator from "@/helpers/validators/changeOrderStatusValidator";
+// import changeOrderStatusValidator from "@/helpers/validators/changeOrderStatusValidator";
 
 const CancelOrderPopUp = ({
   changeStatusPopUp,
@@ -25,13 +25,13 @@ const CancelOrderPopUp = ({
   const { clearError, getError, validateErrors } = useValidate();
 
   const changeStatus = () => {
-    const errors = validateErrors(
-      { status, description },
-      changeOrderStatusValidator,
-    );
-    if (errors) {
-      return;
-    }
+    // const errors = validateErrors(
+    //   { status, description },
+    //   changeOrderStatusValidator,
+    // );
+    // if (errors) {
+    //   return;
+    // }
     const payload = { order_id: selectedOrder.id, reason: description };
     dispatch(showLoader("Please wait"));
     API.patch(`/api/user/cancel-my-order`, payload)
@@ -62,16 +62,16 @@ const CancelOrderPopUp = ({
       isButtonDisabled={!description}
     >
       <div className="flex flex-col my-8">
-        <SelectInput
-          label="Status"
-          value={status}
-          onChange={setStatus}
-          id="status"
-          items={orderStatuses}
-          disabled
-          minWidth="300"
-          className="flex flex-1 mb-4"
-        />
+        {/*<SelectInput*/}
+        {/*  label="Status"*/}
+        {/*  value={status}*/}
+        {/*  onChange={setStatus}*/}
+        {/*  id="status"*/}
+        {/*  items={orderStatuses}*/}
+        {/*  disabled*/}
+        {/*  minWidth="300"*/}
+        {/*  className="flex flex-1 mb-4"*/}
+        {/*/>*/}
         <CustomInput
           label="Description"
           placeholder="Enter description"

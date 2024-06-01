@@ -4,4 +4,4 @@ const MainPage = () => {
   return <MainPageView />;
 };
 
-export default  MainPage;
+export default MainPage;

@@ -1,4 +1,4 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/app/GlobalRedux/Features/authSlice";
@@ -9,9 +9,6 @@ const withoutAuth = (WrappedComponent) => {
     const role = useSelector((state) => state?.authSlice?.user?.role);
     const router = useRouter();
     const dispatch = useDispatch();
-
-    const searchParams = useSearchParams();
-    const product = searchParams.get("product");
 
     useEffect(() => {
       if (!!accessToken) {
@@ -25,7 +22,7 @@ const withoutAuth = (WrappedComponent) => {
       } else {
         dispatch(logout());
       }
-    }, [accessToken, role, router, dispatch, product]);
+    }, [accessToken, role, router, dispatch]);
 
     return accessToken ? null : <WrappedComponent {...props} />;
   };
