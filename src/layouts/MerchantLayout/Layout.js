@@ -1,13 +1,13 @@
-import NavBar from "@/layouts/MerchantLayout/NavBar";
-import { merchantMenuItems } from "@/helpers/menuItems";
 import PageLoader from "@/layouts/PageLoader";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { hideLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import Toast from "@/layouts/Toast";
+import MerchantNavBar from "@/layouts/MerchantLayout/MerchantNavBar";
 
 const Layout = ({ children }) => {
   const [mounted, setMounted] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,9 +18,9 @@ const Layout = ({ children }) => {
   return (
     mounted && (
       <div>
-        <NavBar menuItems={merchantMenuItems}>
+        <MerchantNavBar>
           {children}
-        </NavBar>
+        </MerchantNavBar>
         <PageLoader />
         <Toast />
       </div>
