@@ -10,6 +10,10 @@ import { StackedLineChart } from "@mui/icons-material";
 import Statistic from "@/components/dashboard/Statistic";
 import { amountFormatter } from "@/helpers/functions";
 import withAuth from "@/helpers/auth/merchantWrapper";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import API from "@/helpers/APIServices/API";
+import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
 
 const series = [
   {
@@ -33,6 +37,16 @@ const series = [
 ];
 
 const DashboardView = () => {
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+    // API.get(`/merchants/${merchant?.id}/stations`)
+    //   .then((response) => {
+    //     console.log(response.data.data);
+    //   })
+    //   .catch(() => dispatch(showErrorToast("Could not get categories...")));
+  // }, [dispatch]);
+
   return (
     <Layout>
       <div className="flex flex-col pt-24 pb-8 px-4 sm:mx-2">

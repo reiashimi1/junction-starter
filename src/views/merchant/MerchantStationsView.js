@@ -6,8 +6,8 @@ import * as React from "react";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { amountFormatter } from "@/helpers/functions";
 import AddButton from "@/core/buttons/AddButton";
@@ -26,6 +26,8 @@ const MerchantStationsView = () => {
   const [updated, setUpdated] = useState(0);
   const [selectedRow, setSelectedRow] = useState("");
 
+  const merchant = useSelector((state) => state?.authSlice?.user?.merchant);
+
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -35,12 +37,6 @@ const MerchantStationsView = () => {
       headerName: "Name",
       minWidth: 100,
       maxWidth: 200,
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      minWidth: 150,
-      maxWidth: 250,
     },
     {
       field: "latitude",
@@ -115,15 +111,14 @@ const MerchantStationsView = () => {
   };
 
   const getStations = () => {
-    // dispatch(showLoader("Please wait..."));
-    // API.get(`/api/user/orders/${orderId}`)
-    //   .then((response) => {
-    //     const { order } = response.data;
-    //     setOrder(order);
-    setStations([{ id: 12, name: "test", description: "testtttt" }]);
-    // })
-    // .catch((e) => dispatch(showErrorToast(e.response.data.message)))
-    // .finally(() => dispatch(hideLoader()));
+    dispatch(showLoader("Please wait"));
+    API.get(`/merchants/${merchant?.id}/stations`)
+      .then((response) => {
+        const { stations } = response.data.data;
+        setStations(stations);
+      })
+      .catch(() => dispatch(showErrorToast("Could not get stations...")))
+      .finally(() => dispatch(hideLoader()));
   };
 
   return (
@@ -150,6 +145,7 @@ const MerchantStationsView = () => {
                     handleClick={() => setAddPopUp(true)}
                   />,
                 ]}
+                dependencies={[updated]}
                 totalCount={stations.length}
               />
             </div>
@@ -160,6 +156,7 @@ const MerchantStationsView = () => {
         <AddStationPopUp
           addPopUp={addPopUp}
           setAddPopUp={setAddPopUp}
+          merchantId={merchant?.id}
           onSuccess={updateData}
         />
       )}
@@ -168,6 +165,7 @@ const MerchantStationsView = () => {
           station={selectedRow}
           editPopUp={editPopUp}
           setEditPopUp={setEditPopUp}
+          merchantId={merchant?.id}
           onSuccess={updateData}
         />
       )}
@@ -176,6 +174,7 @@ const MerchantStationsView = () => {
           deletePopUp={deletePopUp}
           setDeletePopUp={setDeletePopUp}
           selectedRow={selectedRow}
+          merchantId={merchant?.id}
           onSuccess={updateData}
         />
       )}

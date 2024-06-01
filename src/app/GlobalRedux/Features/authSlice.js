@@ -25,6 +25,8 @@ const AuthSlice = createSlice({
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       const user = action.payload?.user;
+      const merchant = action.payload?.merchant;
+      user.merchant = merchant;
       if (!!action.payload?.merchant) {
         state.role = "merchant";
       } else if (!!action.payload?.admin) {
@@ -63,9 +65,25 @@ const AuthSlice = createSlice({
         // phone_number: action.payload?.phoneNumber,
       };
     },
+    updateTokens: (state, action) => {
+      const accessToken = action.payload?.accessToken;
+      const refreshToken = action.payload?.refreshToken;
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      if (typeof window !== "undefined") {
+        localStorage.setItem(
+          "giraffeVeAccessToken",
+          JSON.stringify(accessToken),
+        );
+        localStorage.setItem(
+          "giraffeVeRefreshToken",
+          JSON.stringify(refreshToken),
+        );
+      }
+    },
   },
 });
 
-export const { login, logout, refreshUser } = AuthSlice.actions;
+export const { login, logout, refreshUser, updateTokens } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

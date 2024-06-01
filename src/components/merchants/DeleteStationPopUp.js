@@ -13,25 +13,26 @@ const DeleteStationPopUp = ({
   deletePopUp,
   setDeletePopUp,
   selectedRow,
+  merchantId,
   onSuccess,
 }) => {
   const dispatch = useDispatch();
 
   const deleteProduct = () => {
     dispatch(showLoader("Please wait"));
-    API.delete(`/api/admin/products/${selectedRow.id}`)
+    API.delete(`/merchants/${merchantId}/stations/${selectedRow.id}`)
       .then(() => {
-        dispatch(showSuccessToast("Product deleted successfully"));
+        dispatch(showSuccessToast("Station deleted successfully"));
         onSuccess();
         setDeletePopUp(false);
       })
-      .catch(() => dispatch(showErrorToast("Could not delete product")))
+      .catch(() => dispatch(showErrorToast("Could not delete station")))
       .finally(() => dispatch(hideLoader()));
   };
 
   return (
     <FormPopUp
-      title="Delete product"
+      title="Delete station"
       open={deletePopUp}
       setOpen={setDeletePopUp}
       handleSubmit={deleteProduct}
@@ -40,13 +41,9 @@ const DeleteStationPopUp = ({
       icon={<Delete />}
     >
       <div className="my-4">
-        Are you sure you want to delete product{" "}
+        Are you sure you want to delete station{" "}
         <span className="font-semibold italic">{selectedRow?.name}</span>?
       </div>
-      <div className="my-4">
-        This will affect also the existing orders that contain this product
-      </div>
-      <div>Maybe you can try to change the product status instead</div>
     </FormPopUp>
   );
 };
