@@ -9,10 +9,10 @@ import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { amountFormatter} from "@/helpers/functions";
+import { amountFormatter } from "@/helpers/functions";
 import AddButton from "@/core/buttons/AddButton";
 import { IconButton, Tooltip } from "@mui/material";
-import {Delete, Edit, Visibility} from "@mui/icons-material";
+import { Delete, Edit, Visibility } from "@mui/icons-material";
 import AddStationPopUp from "@/components/merchants/AddStationPopUp";
 import EditStationPopUp from "@/components/merchants/EditStationPopUp";
 import DeleteStationPopUp from "@/components/merchants/DeleteStationPopUp";
@@ -61,6 +61,12 @@ const MerchantStationsView = () => {
       maxWidth: 120,
     },
     {
+      field: "viewers",
+      headerName: "Viewers",
+      minWidth: 100,
+      maxWidth: 200,
+    },
+    {
       field: "actions",
       headerName: "Actions",
       minWidth: 150,
@@ -106,7 +112,7 @@ const MerchantStationsView = () => {
 
   const viewStationDetails = (selectedRow) => {
     router.push(`/merchant/stations/${selectedRow.id}`);
-  }
+  };
 
   const getStations = () => {
     // dispatch(showLoader("Please wait..."));

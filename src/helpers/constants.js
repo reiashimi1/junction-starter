@@ -17,10 +17,15 @@ export const userStatusesAdmin = [
 ];
 
 const paymentMethods = [
-  { label: "All payments", value: "all"},
-  { label: "All payments", value: "all"},
-]
+  { label: "All payments", value: "all" },
+  { label: "All payments", value: "all" },
+];
 export const speedOptions = [
   { label: "20 kw/h", value: 20 },
   { label: "100 kw/h", value: 100 },
+];
+
+export const socketOptions = [
+  { label: "bla bla", value: "bla" },
+  { label: "bla bla2", value: "bla2" },
 ];

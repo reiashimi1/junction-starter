@@ -90,6 +90,18 @@ const StationDetailsView = ({ id }) => {
       maxWidth: 200,
     },
     {
+      field: "socket",
+      headerName: "Socket",
+      minWidth: 100,
+      maxWidth: 150,
+    },
+    {
+      field: "viewers",
+      headerName: "Viewers",
+      minWidth: 100,
+      maxWidth: 200,
+    },
+    {
       field: "actions",
       headerName: "Actions",
       minWidth: 150,

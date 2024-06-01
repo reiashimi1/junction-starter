@@ -12,7 +12,7 @@ import {
 } from "@/app/GlobalRedux/Features/toastSlice";
 import stationValidator from "@/helpers/validators/stationValidator";
 import API from "@/helpers/APIServices/API";
-import { speedOptions } from "@/helpers/constants";
+import { socketOptions, speedOptions } from "@/helpers/constants";
 import SelectInput from "@/core/inputs/SelectInput";
 
 const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
@@ -22,6 +22,7 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
   const [price, setPrice] = useState("");
   const [dynamicPrice, setDynamicPrice] = useState("");
   const [requests, setRequests] = useState("");
+  const [socket, setSocket] = useState("");
 
   const dispatch = useDispatch();
   const { clearError, getError, validateErrors } = useValidate();
@@ -137,6 +138,16 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
             required
           />
         </div>
+        <SelectInput
+          label="Socket"
+          value={socket}
+          onChange={setSocket}
+          id="socket"
+          items={socketOptions}
+          minWidth="300"
+          required
+          className="flex flex-1"
+        />
       </div>
     </FormPopUp>
   );
