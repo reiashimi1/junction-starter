@@ -48,17 +48,17 @@ const MerchantNavBar = ({ children, window: windowProp }) => {
 
   const handleLogout = () => {
     dispatch(showLoader("Logging out"));
-    // API.get("/api/logout-custom")
-    //   .then(() => {
-    //     dispatch(showLoader("Logged out successfully"));
-    //     dispatch(logout());
-    //   })
-    //   .catch(() => console.error("Could not logout user"))
-    //   .finally(() => {
-    //     router.push("/login");
-    //     dispatch(hideLoader());
-    //     dispatch(logout());
-    //   });
+    API.post("/auth/logout")
+      .then(() => {
+        dispatch(showLoader("Logged out successfully"));
+        dispatch(logout());
+      })
+      .catch(() => console.error("Could not logout user"))
+      .finally(() => {
+        router.push("/login");
+        dispatch(hideLoader());
+        dispatch(logout());
+      });
   };
 
   const handleNavigation = () => {

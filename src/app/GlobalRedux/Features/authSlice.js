@@ -7,36 +7,44 @@ const AuthSlice = createSlice({
   initialState: {
     accessToken:
       typeof window !== "undefined"
-        ? JSON.parse(localStorage.getItem("cloudTenAccessToken"))
+        ? JSON.parse(localStorage.getItem("giraffeVeAccessToken"))
         : null,
     refreshToken:
       typeof window !== "undefined"
-        ? JSON.parse(localStorage.getItem("cloudTenRefreshToken"))
+        ? JSON.parse(localStorage.getItem("giraffeVeRefreshToken"))
         : null,
     user:
       typeof window !== "undefined"
-        ? JSON.parse(localStorage.getItem("cloudTenUser"))
+        ? JSON.parse(localStorage.getItem("giraffeVeUser"))
         : {},
   },
   reducers: {
     login: (state, action) => {
-      const accessToken = action.payload?.authentication?.access_token;
-      const refreshToken = action.payload?.authentication?.refresh_token;
+      const accessToken = action.payload?.authentication?.accessToken;
+      const refreshToken = action.payload?.authentication?.refreshToken;
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       const user = action.payload?.user;
-      user.role = user?.roles[0]?.title?.toLowerCase();
+      const merchant = action.payload?.merchant;
+      user.merchant = merchant;
+      if (!!action.payload?.merchant) {
+        state.role = "merchant";
+      } else if (!!action.payload?.admin) {
+        state.role = "admin";
+      } else {
+        state.role = "user";
+      }
       state.user = user;
       if (typeof window !== "undefined") {
         localStorage.setItem(
-          "cloudTenAccessToken",
+          "giraffeVeAccessToken",
           JSON.stringify(accessToken),
         );
         localStorage.setItem(
-          "cloudTenRefreshToken",
+          "giraffeVeRefreshToken",
           JSON.stringify(refreshToken),
         );
-        localStorage.setItem("cloudTenUser", JSON.stringify(user));
+        localStorage.setItem("giraffeVeUser", JSON.stringify(user));
       }
     },
     logout: (state) => {
@@ -44,22 +52,38 @@ const AuthSlice = createSlice({
       state.accessToken = null;
       state.refreshToken = null;
       if (typeof window !== "undefined") {
-        localStorage.removeItem("cloudTenAccessToken");
-        localStorage.removeItem("cloudTenRefreshToken");
-        localStorage.removeItem("cloudTenUser");
+        localStorage.removeItem("giraffeVeAccessToken");
+        localStorage.removeItem("giraffeVeRefreshToken");
+        localStorage.removeItem("giraffeVeUser");
       }
     },
     refreshUser: (state, action) => {
       state.user = {
         ...state.user,
         email: action.payload?.email,
-        name: action.payload?.name,
-        phone_number: action.payload?.phoneNumber,
+        name: action.payload?.user?.name,
+        // phone_number: action.payload?.phoneNumber,
       };
+    },
+    updateTokens: (state, action) => {
+      const accessToken = action.payload?.accessToken;
+      const refreshToken = action.payload?.refreshToken;
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      if (typeof window !== "undefined") {
+        localStorage.setItem(
+          "giraffeVeAccessToken",
+          JSON.stringify(accessToken),
+        );
+        localStorage.setItem(
+          "giraffeVeRefreshToken",
+          JSON.stringify(refreshToken),
+        );
+      }
     },
   },
 });
 
-export const { login, logout, refreshUser } = AuthSlice.actions;
+export const { login, logout, refreshUser, updateTokens } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

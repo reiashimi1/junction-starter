@@ -1,11 +1,26 @@
 const stationValidator = {
-  email: {
+  name: {
     presence: {
       allowEmpty: false,
-      message: "Email cannot be empty",
+      message: "Name cannot be empty",
     },
-    email: {
-      message: "Not a valid email address",
+  },
+  address: {
+    presence: {
+      allowEmpty: false,
+      message: "Address cannot be empty",
+    },
+  },
+  latitude: {
+    presence: {
+      allowEmpty: false,
+      message: "Latitude cannot be empty",
+    },
+  },
+  longitude: {
+    presence: {
+      allowEmpty: false,
+      message: "Longitude cannot be empty",
     },
   },
 };

@@ -50,8 +50,10 @@ const SelectInput = ({
           {/*</MenuItem>*/}
           {items.map((item) => (
             <MenuItem key={item.value} value={item.value}>
-              {!!item?.color && <Album className={`${item.color}`} />}
-              {item.label}
+              <div className="flex items-center">
+                {!!item?.color && <Album className={`${item.color} mr-1`} />}
+                {item.label}
+              </div>
             </MenuItem>
           ))}
         </Select>

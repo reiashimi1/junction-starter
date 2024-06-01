@@ -9,30 +9,29 @@ import {
   showSuccessToast,
 } from "@/app/GlobalRedux/Features/toastSlice";
 
-const DeleteStationPopUp = ({
+const DeleteChargePointPopUp = ({
   deletePopUp,
   setDeletePopUp,
   selectedRow,
-  merchantId,
   onSuccess,
 }) => {
   const dispatch = useDispatch();
 
   const deleteProduct = () => {
     dispatch(showLoader("Please wait"));
-    API.delete(`/merchants/${merchantId}/stations/${selectedRow.id}`)
+    API.delete(`/api/admin/products/${selectedRow.id}`)
       .then(() => {
-        dispatch(showSuccessToast("Station deleted successfully"));
+        dispatch(showSuccessToast("Product deleted successfully"));
         onSuccess();
         setDeletePopUp(false);
       })
-      .catch(() => dispatch(showErrorToast("Could not delete station")))
+      .catch(() => dispatch(showErrorToast("Could not delete product")))
       .finally(() => dispatch(hideLoader()));
   };
 
   return (
     <FormPopUp
-      title="Delete station"
+      title="Delete product"
       open={deletePopUp}
       setOpen={setDeletePopUp}
       handleSubmit={deleteProduct}
@@ -41,11 +40,15 @@ const DeleteStationPopUp = ({
       icon={<Delete />}
     >
       <div className="my-4">
-        Are you sure you want to delete station{" "}
+        Are you sure you want to delete product{" "}
         <span className="font-semibold italic">{selectedRow?.name}</span>?
       </div>
+      <div className="my-4">
+        This will affect also the existing orders that contain this product
+      </div>
+      <div>Maybe you can try to change the product status instead</div>
     </FormPopUp>
   );
 };
 
-export default DeleteStationPopUp;
+export default DeleteChargePointPopUp;
