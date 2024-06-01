@@ -15,10 +15,9 @@ const UserCartView = () => {
     <Layout>
       <div className="flex md:flex-row flex-col-reverse h-full md:space-x-5 py-28 px-4">
         <OrderDetails products={products} total={totalAmount} />
-        <OrderProducts products={products} />
       </div>
     </Layout>
   );
 };
 
-export default withAuth(UserCartView);
+export default UserCartView;

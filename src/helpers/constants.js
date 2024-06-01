@@ -15,3 +15,8 @@ export const userStatusesAdmin = [
   { label: "Active users", value: 1 },
   { label: "Inactive users", value: 0 },
 ];
+
+const paymentMethods = [
+  { label: "All payments", value: "all"},
+  { label: "All payments", value: "all"},
+]
