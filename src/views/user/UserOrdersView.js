@@ -63,7 +63,7 @@ const UserOrdersView = () => {
       maxWidth: 150,
       sortable: true,
       disableColumnMenu: false,
-      valueGetter: (params) => amountFormatter(params.row.total_amount, "CAD"),
+      valueGetter: (params) => amountFormatter(params.row.total_amount, "USD"),
     },
     {
       field: "payment_method",

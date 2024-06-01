@@ -11,17 +11,20 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "@/app/GlobalRedux/Features/toastSlice";
-import { appendToPayload, isObjectEmpty } from "@/helpers/functions";
+import { isObjectEmpty } from "@/helpers/functions";
 import API from "@/helpers/APIServices/API";
 
-const EditStationPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
+const EditStationPopUp = ({
+  station,
+  editPopUp,
+  setEditPopUp,
+  merchantId,
+  onSuccess,
+}) => {
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [price, setPrice] = useState("");
-  const [discount, setDiscount] = useState("");
-  const [requests, setRequests] = useState("");
 
   const dispatch = useDispatch();
   const { clearError, getError, validateErrors } = useValidate();
@@ -30,12 +33,9 @@ const EditStationPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
     const errors = validateErrors(
       {
         name,
-        description,
+        address,
         latitude,
         longitude,
-        price,
-        discount,
-        requests,
       },
       stationValidator,
     );
@@ -44,15 +44,12 @@ const EditStationPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
     }
     const payload = {
       name,
-      description,
+      address,
       latitude,
       longitude,
-      price,
-      discount,
-      requests,
     };
     dispatch(showLoader("Please wait"));
-    API.post("/api/station/edit", payload)
+    API.put(`/merchants/${merchantId}/stations/${station.id}`, payload)
       .then(() => {
         dispatch(showSuccessToast("Station edited successfully"));
         onSuccess();
@@ -67,7 +64,7 @@ const EditStationPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
   useEffect(() => {
     if (!isObjectEmpty(station)) {
       setName(station?.name);
-      setDescription(station?.description);
+      setAddress(station?.address);
       setLatitude(station?.latitude);
       setLongitude(station?.longitude);
       setPrice(station?.price);
@@ -99,13 +96,11 @@ const EditStationPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
             className="flex-1"
           />
           <CustomInput
-            label="Description"
-            placeholder="Enter description"
-            handleChange={(value) =>
-              clearError("description", value, setDescription)
-            }
-            value={description}
-            error={getError("description")}
+            label="address"
+            placeholder="Enter address"
+            handleChange={(value) => clearError("address", value, setAddress)}
+            value={address}
+            error={getError("address")}
             multiline
             className="flex-1"
           />
@@ -137,40 +132,6 @@ const EditStationPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
               required
             />
           </div>
-          <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 sm:space-y-0 space-y-4 md:mt-0 mt-6">
-            <CustomInput
-              label="Price"
-              type="number"
-              placeholder="Enter price"
-              handleChange={(value) => clearError("price", value, setPrice)}
-              value={price}
-              error={getError("price")}
-              required
-              className="flex-1"
-            />
-          </div>
-        </div>
-        <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 pb-4 sm:space-y-0 space-y-4 sm:pt-0 -pt-2">
-          <CustomInput
-            label="Discount price / requests"
-            placeholder="Enter discount price"
-            type="number"
-            handleChange={(value) => clearError("discount", value, setDiscount)}
-            value={discount}
-            error={getError("discount")}
-            className="flex-1"
-            required
-          />
-          <CustomInput
-            label="Requests for discount"
-            placeholder="Enter requests number"
-            type="number"
-            handleChange={(value) => clearError("requests", value, setRequests)}
-            value={requests}
-            error={getError("requests")}
-            className="flex-1"
-            required
-          />
         </div>
       </div>
     </FormPopUp>

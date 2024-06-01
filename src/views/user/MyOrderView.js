@@ -57,7 +57,7 @@ const MyOrderView = ({ orderId }) => {
       headerName: "Price",
       minWidth: 100,
       maxWidth: 150,
-      valueGetter: (params) => amountFormatter(params.row.price, "CAD"),
+      valueGetter: (params) => amountFormatter(params.row.price, "USD"),
     },
     {
       field: "discount_price",
@@ -65,7 +65,7 @@ const MyOrderView = ({ orderId }) => {
       minWidth: 100,
       maxWidth: 150,
       valueGetter: (params) =>
-        amountFormatter(params.row.discount_price, "CAD"),
+        amountFormatter(params.row.discount_price, "USD"),
     },
     {
       field: "Image 1",

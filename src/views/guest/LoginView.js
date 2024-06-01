@@ -30,23 +30,25 @@ const LoginView = () => {
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    console.log(email);
     const errors = validateErrors({ email, password }, loginValidator);
     if (errors) {
       dispatch(showErrorToast("Error"));
       return;
     }
     dispatch(showLoader("Please wait"));
-    const payload = { email, password };
+    const payload = { username: email, password };
     GuestAPI.post("/auth/login", payload)
       .then((response) => {
-        const { data, message } = response.data;
+        console.log(response.data);
+        const data = response.data.data;
         dispatch(login(data));
-        dispatch(showSuccessToast(message));
-        if (data?.user?.role === "admin") {
+        dispatch(showSuccessToast("Logged in sucessfully"));
+        if (!!data?.merchant) {
+          router.push("/merchant");
+        } else if (!!data?.user) {
+          router.push("/");
+        } else if (!!data?.admin) {
           router.push("/admin");
-        } else {
-          router.push("/user/products");
         }
       })
       .catch((error) => {
