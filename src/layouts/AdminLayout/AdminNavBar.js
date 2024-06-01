@@ -48,17 +48,17 @@ const AdminNavBar = ({ children, window: windowProp }) => {
 
   const handleLogout = () => {
     dispatch(showLoader("Logging out"));
-    // API.get("/api/logout-custom")
-    //   .then(() => {
-    //     dispatch(showLoader("Logged out successfully"));
-    //     dispatch(logout());
-    //   })
-    //   .catch(() => console.error("Could not logout user"))
-    //   .finally(() => {
-    //     router.push("/login");
-    //     dispatch(hideLoader());
-    //     dispatch(logout());
-    //   });
+    API.post("/auth/lgogout")
+      .then(() => {
+        dispatch(showLoader("Logged out successfully"));
+        dispatch(logout());
+      })
+      .catch(() => console.error("Could not logout user"))
+      .finally(() => {
+        router.push("/login");
+        dispatch(hideLoader());
+        dispatch(logout());
+      });
   };
 
   const handleNavigation = () => {
@@ -117,7 +117,7 @@ const AdminNavBar = ({ children, window: windowProp }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 4 }}>
             <Link href="/">
               {/*<img className="logo" src={logo.src} alt="Logo" />*/}
-                IMAGE
+              IMAGE
             </Link>
           </Typography>
           <div>
@@ -199,7 +199,8 @@ const AdminNavBar = ({ children, window: windowProp }) => {
             {/*  }}*/}
             {/*>*/}
             <div className="flex justify-center h-12 my-8">
-              <img src={logo.src} alt="Logo" />
+              {/*<img src={logo.src} alt="Logo" />*/}
+              logo
             </div>
             {/*</Typography>*/}
             <Divider />

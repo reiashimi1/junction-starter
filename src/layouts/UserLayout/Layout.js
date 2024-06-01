@@ -1,4 +1,4 @@
-import NavBar from "@/layouts/NavBar";
+import NavBar from "@/layouts/UserLayout/NavBar";
 import { userMenuItems } from "@/helpers/menuItems";
 import PageLoader from "@/layouts/PageLoader";
 import { useDispatch } from "react-redux";

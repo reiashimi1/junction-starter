@@ -104,4 +104,4 @@ const DashboardView = () => {
   );
 };
 
-export default withAuth(DashboardView);
+export default DashboardView;

@@ -33,13 +33,28 @@ export const userMenuItems = [
   },
 ];
 
-export const adminMenuItems = [
+export const merchantMenuItems = [
   {
-    label: "Home",
-    route: "/",
-    icon: <Apps />,
+    label: "Dashboard",
+    route: "/merchant",
+    icon: <Dashboard />,
     admin: true,
   },
+  {
+    label: "Stations",
+    route: "/merchant/stations",
+    icon: <Inventory />,
+    admin: true,
+  },
+  {
+    label: "Orders",
+    route: "/merchant/orders",
+    icon: <ListAlt />,
+    admin: true,
+  },
+];
+
+export const adminMenuItems = [
   {
     label: "Dashboard",
     route: "/admin",
@@ -47,8 +62,8 @@ export const adminMenuItems = [
     admin: true,
   },
   {
-    label: "Products",
-    route: "/admin/products",
+    label: "Stations",
+    route: "/merchant/stations",
     icon: <Inventory />,
     admin: true,
   },

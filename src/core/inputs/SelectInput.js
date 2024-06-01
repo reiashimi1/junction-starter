@@ -3,6 +3,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Album } from "@mui/icons-material";
 
 const SelectInput = ({
   id,
@@ -49,7 +50,10 @@ const SelectInput = ({
           {/*</MenuItem>*/}
           {items.map((item) => (
             <MenuItem key={item.value} value={item.value}>
-              {item.label}
+              <div className="flex items-center">
+                {!!item?.color && <Album className={`${item.color} mr-1`} />}
+                {item.label}
+              </div>
             </MenuItem>
           ))}
         </Select>

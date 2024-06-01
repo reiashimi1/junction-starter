@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import PasswordInput from "@/core/inputs/PasswordInput";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/app/GlobalRedux/Features/authSlice";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
@@ -26,34 +26,29 @@ const LoginView = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const searchParams = useSearchParams();
-  const product = searchParams.get("product");
-
   const { clearError, getError, validateErrors } = useValidate();
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    console.log(email);
     const errors = validateErrors({ email, password }, loginValidator);
     if (errors) {
       dispatch(showErrorToast("Error"));
       return;
     }
     dispatch(showLoader("Please wait"));
-    const payload = { email, password };
-    GuestAPI.post("/api/login", payload)
+    const payload = { username: email, password };
+    GuestAPI.post("/auth/login", payload)
       .then((response) => {
-        const { data, message } = response.data;
+        console.log(response.data);
+        const data = response.data.data;
         dispatch(login(data));
-        dispatch(showSuccessToast(message));
-        if (data?.user?.role === "admin") {
+        dispatch(showSuccessToast("Logged in sucessfully"));
+        if (!!data?.merchant) {
+          router.push("/merchant");
+        } else if (!!data?.user) {
+          router.push("/");
+        } else if (!!data?.admin) {
           router.push("/admin");
-        } else {
-          if (product != null) {
-            router.push(`/user/products/${product}`);
-          } else {
-            router.push("/user/products");
-          }
         }
       })
       .catch((error) => {
@@ -121,12 +116,20 @@ const LoginView = () => {
                 color="inherit"
                 className="flex flex-1"
               />
-              <LinkButton
-                text="Register"
-                href="/register"
-                color="inherit"
-                className="flex flex-1 justify-end"
-              />
+              <div className="flex flex-col space-y-2">
+                <LinkButton
+                  text="Register as client"
+                  href="/register/client"
+                  color="inherit"
+                  className="flex flex-1 justify-end"
+                />
+                <LinkButton
+                  text="Register as merchant"
+                  href="/register/merchant"
+                  color="inherit"
+                  className="flex flex-1 justify-end"
+                />
+              </div>
             </div>
           </form>
         </div>

@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 function useScreenSize() {
   function getCurrentDimension() {
     return {
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: typeof window !== "undefined" ? window.innerWidth : 0,
+      height: typeof window !== "undefined" ? window.innerHeight : 0,
     };
   }
 

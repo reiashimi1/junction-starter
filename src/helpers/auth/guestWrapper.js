@@ -1,4 +1,4 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/app/GlobalRedux/Features/authSlice";
@@ -10,30 +10,19 @@ const withoutAuth = (WrappedComponent) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
-    const searchParams = useSearchParams();
-    const product = searchParams.get("product");
-
     useEffect(() => {
       if (!!accessToken) {
         if (role === "admin") {
-          if (product != null) {
-            router.push(`/admin/products/view?id=${product}`);
-          } else {
-            router.push("/admin/");
-          }
-          // } else if (role === "guest") {
-        } else {
-          if (product != null) {
-            router.push(`/user/products/view?id=${product}`);
-          } else {
-            router.push("/user/products");
-          }
+          router.push("/admin");
+        } else if (role == "merchant") {
+          router.push("/merchant");
+        } else if (role === "user") {
+          router.push("/user");
         }
-        // TODO: What if role is no there, handle this case -- handled with comment above
       } else {
         dispatch(logout());
       }
-    }, [accessToken, role, router, dispatch, product]);
+    }, [accessToken, role, router, dispatch]);
 
     return accessToken ? null : <WrappedComponent {...props} />;
   };
