@@ -113,9 +113,6 @@ const Card = ({ cardNumber = '1234 5678 9012 3456', cardHolder = 'John Doe', exp
       </CreditCard>
 
       <FormContainer>
-        <Typography variant="h6" gutterBottom>
-          User Points and Referral Code
-        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
