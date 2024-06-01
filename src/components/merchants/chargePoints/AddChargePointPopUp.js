@@ -12,14 +12,15 @@ import {
 } from "@/app/GlobalRedux/Features/toastSlice";
 import stationValidator from "@/helpers/validators/stationValidator";
 import API from "@/helpers/APIServices/API";
+import { speedOptions } from "@/helpers/constants";
+import SelectInput from "@/core/inputs/SelectInput";
 
 const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [speed, setSpeed] = useState("");
   const [price, setPrice] = useState("");
-  const [discount, setDiscount] = useState("");
+  const [dynamicPrice, setDynamicPrice] = useState("");
   const [requests, setRequests] = useState("");
 
   const dispatch = useDispatch();
@@ -30,10 +31,9 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
       {
         name,
         description,
-        latitude,
-        longitude,
+        speed,
         price,
-        discount,
+        dynamicPrice,
         requests,
       },
       stationValidator,
@@ -45,7 +45,7 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
     dispatch(showLoader("Please wait"));
     API.post("/api/station", payload)
       .then(() => {
-        dispatch(showSuccessToast("Station added successfully"));
+        dispatch(showSuccessToast("Charge point added successfully"));
         onSuccess();
         setAddPopUp(false);
       })
@@ -57,7 +57,7 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
 
   return (
     <FormPopUp
-      title="Create new station"
+      title="Create new charge point"
       open={addPopUp}
       setOpen={setAddPopUp}
       handleSubmit={addProduct}
@@ -91,54 +91,40 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
         </div>
         <div className="flex md:flex-row flex-col justify-between md:space-x-4">
           <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 sm:space-y-0 space-y-4 md:mt-0 -mt-2">
-            <CustomInput
-              label="Latitude"
-              type="number"
-              placeholder="Enter latitude"
-              handleChange={(value) =>
-                clearError("latitude", value, setLatitude)
-              }
-              value={latitude}
-              error={getError("latitude")}
-              className="flex-1"
+            <SelectInput
+              label="Speed"
+              value={speed}
+              onChange={setSpeed}
+              id="speed"
+              items={speedOptions}
+              minWidth="300"
               required
+              className="flex flex-1"
             />
             <CustomInput
-              label="Longitude"
+              label="price"
               type="number"
-              placeholder="Enter longitude"
-              handleChange={(value) =>
-                clearError("longitude", value, setLongitude)
-              }
-              value={longitude}
-              error={getError("longitude")}
-              className="flex-1"
-              required
-            />
-          </div>
-          <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 sm:space-y-0 space-y-4 md:mt-0 mt-6">
-            <CustomInput
-              label="Price"
-              type="number"
-              placeholder="Enter price"
+              placeholder="Enter starting price"
               handleChange={(value) => clearError("price", value, setPrice)}
               value={price}
               error={getError("price")}
-              required
               className="flex-1"
+              required
             />
           </div>
         </div>
         <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 pb-4 sm:space-y-0 space-y-4 sm:pt-0 -pt-2">
           <CustomInput
-            label="Discount price / requests"
-            placeholder="Enter discount price"
+            label="Dynamic price"
             type="number"
-            handleChange={(value) => clearError("discount", value, setDiscount)}
-            value={discount}
-            error={getError("discount")}
-            className="flex-1"
+            placeholder="Enter dynamic price"
+            handleChange={(value) =>
+              clearError("dynamicPrice", value, setDynamicPrice)
+            }
+            value={dynamicPrice}
+            error={getError("dynamicPrice")}
             required
+            className="flex-1"
           />
           <CustomInput
             label="Requests for discount"

@@ -15,3 +15,8 @@ export const userStatusesAdmin = [
   { label: "Active users", value: 1 },
   { label: "Inactive users", value: 0 },
 ];
+
+export const speedOptions = [
+  { label: "20 kw/h", value: 20 },
+  { label: "100 kw/h", value: 100 },
+];

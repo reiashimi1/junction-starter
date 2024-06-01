@@ -1,7 +1,7 @@
-import StationChargePointView from "@/views/merchant/StationChargePointView";
+import StationDetailsView from "@/views/merchant/StationDetailsView";
 
 const StationChargePointsPage = ({ params }) => {
-  return <StationChargePointView id={params.id} />;
+  return <StationDetailsView id={params.id} />;
 };
 
 export default StationChargePointsPage;

@@ -14,8 +14,15 @@ import DataTable from "@/core/datatable/DataTable";
 import SubmitButton from "@/core/buttons/SubmitButton";
 import RowData from "@/components/admin/RowData";
 import BackButton from "@/core/buttons/BackButton";
+import AddButton from "@/core/buttons/AddButton";
+import AddStationPopUp from "@/components/merchants/AddStationPopUp";
+import EditStationPopUp from "@/components/merchants/EditStationPopUp";
+import DeleteStationPopUp from "@/components/merchants/DeleteStationPopUp";
+import DeleteChargePointPopUp from "@/components/merchants/chargePoints/DeleteChargePointPopUp";
+import EditChargePointPopUp from "@/components/merchants/chargePoints/EditChargePointPopUp";
+import AddChargePointPopUp from "@/components/merchants/chargePoints/AddChargePointPopUp";
 
-const StationChargePointView = ({ id }) => {
+const StationDetailsView = ({ id }) => {
   const [station, setStation] = useState("");
   const [chargePoints, setChargePoints] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -127,6 +134,11 @@ const StationChargePointView = ({ id }) => {
   //
   // }, [id]);
 
+  const updateData = () => {
+    setUpdated((prevState) => prevState + 1);
+    setSelectedRow("");
+  };
+
   return (
     <Layout>
       <div className="flex flex-col pt-24 pb-8 px-4 sm:mx-2">
@@ -202,14 +214,44 @@ const StationChargePointView = ({ id }) => {
                 setSelectedRows={setSelectedRows}
                 getData={getStationDetails}
                 dependencies={[id]}
+                buttons={[
+                  <AddButton
+                    key="addButton"
+                    text="New charge point"
+                    handleClick={() => setAddPopUp(true)}
+                  />,
+                ]}
                 totalCount={chargePoints.length}
               />
             </div>
           </div>
         </div>
       </div>
+      {addPopUp && (
+        <AddChargePointPopUp
+          addPopUp={addPopUp}
+          setAddPopUp={setAddPopUp}
+          onSuccess={updateData}
+        />
+      )}
+      {editPopUp && selectedRow && (
+        <EditChargePointPopUp
+          station={selectedRow}
+          editPopUp={editPopUp}
+          setEditPopUp={setEditPopUp}
+          onSuccess={updateData}
+        />
+      )}
+      {deletePopUp && selectedRow && (
+        <DeleteChargePointPopUp
+          deletePopUp={deletePopUp}
+          setDeletePopUp={setDeletePopUp}
+          selectedRow={selectedRow}
+          onSuccess={updateData}
+        />
+      )}
     </Layout>
   );
 };
 
-export default StationChargePointView;
+export default StationDetailsView;
