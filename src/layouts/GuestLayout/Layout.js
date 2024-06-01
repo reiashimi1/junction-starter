@@ -1,4 +1,4 @@
-import NavBar from "@/layouts/NavBar";
+import NavBar from "@/layouts/GuestLayout/NavBar";
 import PageLoader from "@/layouts/PageLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
@@ -36,31 +36,22 @@ const Layout = ({ children }) => {
         hide: isObjectEmpty(user) || user?.role !== "admin",
       },
       {
-        label: "Products",
+        label: "Dashboard",
         route:
           isObjectEmpty(user) || user?.role === "admin"
-            ? "/products"
-            : "/user/products",
+            ? "/admin/dashboard"
+            : user?.role === "merchant"
+              ? "/merchant/dashboard"
+              : "/",
         icon: <Inventory />,
+        hide: isObjectEmpty(user),
       },
-      {
-        label: "My orders",
-        route: "/user/orders",
-        icon: <Inventory />,
-        hide: isObjectEmpty(user) || user?.role === "admin",
-      },
-      {
-        label: "Contact us",
-        route: "/contact-us",
-        icon: <ContactPhone />,
-        // hide: !isObjectEmpty(user) && user?.role === "admin",
-      },
-      {
-        label: productsCount > 0 ? `My Cart (${productsCount})` : "My Cart",
-        route: "/user/cart",
-        icon: <ShoppingCartCheckout />,
-        hide: isObjectEmpty(user) || user?.role === "admin",
-      },
+      // {
+      //   label: "Contact us",
+      //   route: "/contact-us",
+      //   icon: <ContactPhone />,
+      //   // hide: !isObjectEmpty(user) && user?.role === "admin",
+      // },
       {
         label: "Login / Register",
         route: "/login",

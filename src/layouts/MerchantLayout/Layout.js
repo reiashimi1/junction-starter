@@ -1,5 +1,5 @@
-import NavBar from "@/layouts/UserLayout/NavBar";
-import { userMenuItems } from "@/helpers/menuItems";
+import NavBar from "@/layouts/MerchantLayout/NavBar";
+import { merchantMenuItems } from "@/helpers/menuItems";
 import PageLoader from "@/layouts/PageLoader";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
   return (
     mounted && (
       <div>
-        <NavBar menuItems={userMenuItems}>
+        <NavBar menuItems={merchantMenuItems}>
           {children}
         </NavBar>
         <PageLoader />

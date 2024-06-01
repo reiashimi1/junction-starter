@@ -9,7 +9,7 @@ import {
   showSuccessToast,
 } from "@/app/GlobalRedux/Features/toastSlice";
 
-const DeleteProductPopUp = ({
+const DeleteStationPopUp = ({
   deletePopUp,
   setDeletePopUp,
   selectedRow,
@@ -51,4 +51,4 @@ const DeleteProductPopUp = ({
   );
 };
 
-export default DeleteProductPopUp;
+export default DeleteStationPopUp;
