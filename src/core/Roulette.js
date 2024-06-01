@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Wheel } from "react-custom-roulette";
+// import { Wheel } from "react-custom-roulette";
 import { Alert } from "@mui/material";
 import AddButton from "@/core/buttons/AddButton";
 import { isArrayEmpty } from "@/helpers/functions";
@@ -117,45 +117,45 @@ const Roulette = ({ airlineId }) => {
   console.log(renderRoulette);
   return (
     <div>
-      <CustomConfetti
-        // render={loadConfetti && !tryAgainMessage && renderRoulette}
-        load={loadConfetti}
-      />
-      {!isLoading && !isArrayEmpty(options) && (
-        <AddButton
-          text="Spin"
-          handleClick={handleSpinClick}
-          className="w-1/2"
-          variant="contained"
-          disabled={!canSpin}
-        />
-      )}
-      {!isLoading && !isArrayEmpty(options) && (
-        <Wheel
-          outerBorderColor="gray"
-          outerBorderWidth="2"
-          innerBorderWidth="2"
-          innerBorderColor="gray"
-          radiusLineWidth="2"
-          radiusLineColor="white"
-          mustStartSpinning={mustSpin}
-          prizeNumber={prizeNumber}
-          data={options}
-          onStopSpinning={() => {
-            setMustSpin(false);
-            setLoadConfetti(true);
-            setTimeout(() => {
-              setLoadConfetti(false);
-            }, 4000);
-          }}
-        />
-      )}
-      {winningOption && (
-        <Alert severity="success">You won {winningOption?.eventName}</Alert>
-      )}
-      {tryAgainMessage && !mustSpin && (
-        <Alert severity="info">Try again next time</Alert>
-      )}
+      {/*<CustomConfetti*/}
+      {/*  // render={loadConfetti && !tryAgainMessage && renderRoulette}*/}
+      {/*  load={loadConfetti}*/}
+      {/*/>*/}
+      {/*{!isLoading && !isArrayEmpty(options) && (*/}
+      {/*  <AddButton*/}
+      {/*    text="Spin"*/}
+      {/*    handleClick={handleSpinClick}*/}
+      {/*    className="w-1/2"*/}
+      {/*    variant="contained"*/}
+      {/*    disabled={!canSpin}*/}
+      {/*  />*/}
+      {/*)}*/}
+      {/*{!isLoading && !isArrayEmpty(options) && (*/}
+      {/*  <Wheel*/}
+      {/*    outerBorderColor="gray"*/}
+      {/*    outerBorderWidth="2"*/}
+      {/*    innerBorderWidth="2"*/}
+      {/*    innerBorderColor="gray"*/}
+      {/*    radiusLineWidth="2"*/}
+      {/*    radiusLineColor="white"*/}
+      {/*    mustStartSpinning={mustSpin}*/}
+      {/*    prizeNumber={prizeNumber}*/}
+      {/*    data={options}*/}
+      {/*    onStopSpinning={() => {*/}
+      {/*      setMustSpin(false);*/}
+      {/*      setLoadConfetti(true);*/}
+      {/*      setTimeout(() => {*/}
+      {/*        setLoadConfetti(false);*/}
+      {/*      }, 4000);*/}
+      {/*    }}*/}
+      {/*  />*/}
+      {/*)}*/}
+      {/*{winningOption && (*/}
+      {/*  <Alert severity="success">You won {winningOption?.eventName}</Alert>*/}
+      {/*)}*/}
+      {/*{tryAgainMessage && !mustSpin && (*/}
+      {/*  <Alert severity="info">Try again next time</Alert>*/}
+      {/*)}*/}1
     </div>
   );
 };

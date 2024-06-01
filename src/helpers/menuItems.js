@@ -36,23 +36,25 @@ export const userMenuItems = [
 export const merchantMenuItems = [
   {
     label: "Dashboard",
-    route: "/user/products",
-    icon: <Inventory />,
+    route: "/merchant",
+    icon: <Dashboard />,
+    admin: true,
   },
   {
     label: "Stations",
-    route: "/user/orders",
+    route: "/merchant/stations",
+    icon: <Inventory />,
+    admin: true,
+  },
+  {
+    label: "Orders",
+    route: "/merchant/orders",
     icon: <ListAlt />,
+    admin: true,
   },
 ];
 
 export const adminMenuItems = [
-  {
-    label: "Home",
-    route: "/",
-    icon: <Apps />,
-    admin: true,
-  },
   {
     label: "Dashboard",
     route: "/admin",
@@ -60,8 +62,8 @@ export const adminMenuItems = [
     admin: true,
   },
   {
-    label: "Products",
-    route: "/admin/products",
+    label: "Stations",
+    route: "/merchant/stations",
     icon: <Inventory />,
     admin: true,
   },

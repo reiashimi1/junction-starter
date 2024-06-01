@@ -6,10 +6,11 @@ import SidebarItem from "@/components/account/SidebarItem";
 import ChangeName from "@/components/account/ChangeName";
 import ChangeEmail from "@/components/account/ChangeEmail";
 import ChangePassword from "@/components/account/ChangePassword";
-import { Person, Email, Https, Phone } from "@mui/icons-material";
+import { Person, Email, Https, Phone,CreditCard } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "@/app/GlobalRedux/Features/authSlice";
 import ChangePhoneNumber from "@/components/account/ChangePhoneNumber";
+import Card from "@/components/account/CardContent";
 
 const AccountView = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -69,6 +70,13 @@ const AccountView = () => {
       icon: <Https />,
       label: "Change password",
       view: <ChangePassword />,
+      access: true,
+    },
+    {
+      id: "card",
+      icon: <CreditCard />,
+      label: "Card",
+      view: <Card />,
       access: true,
     },
   ];

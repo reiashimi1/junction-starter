@@ -9,8 +9,7 @@ import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import {
   amountFormatter,
   isObjectEmpty,
-  OrderStatusBadge,
-  prepareImagePath,
+  ActiveStatusBadge,
 } from "@/helpers/functions";
 import { ChangeCircle, Visibility } from "@mui/icons-material";
 import API from "@/helpers/APIServices/API";
@@ -58,7 +57,7 @@ const MyOrderView = ({ orderId }) => {
       headerName: "Price",
       minWidth: 100,
       maxWidth: 150,
-      valueGetter: (params) => amountFormatter(params.row.price, "CAD"),
+      valueGetter: (params) => amountFormatter(params.row.price, "USD"),
     },
     {
       field: "discount_price",
@@ -66,7 +65,7 @@ const MyOrderView = ({ orderId }) => {
       minWidth: 100,
       maxWidth: 150,
       valueGetter: (params) =>
-        amountFormatter(params.row.discount_price, "CAD"),
+        amountFormatter(params.row.discount_price, "USD"),
     },
     {
       field: "Image 1",
@@ -75,11 +74,12 @@ const MyOrderView = ({ orderId }) => {
       maxWidth: 200,
       renderCell: (params) => (
         <div className="flex justify-end">
-          <img
-            src={prepareImagePath(params.row.image_1)}
-            className="w-12 object-contain"
-            alt={params.row.name}
-          />
+          {/*<img*/}
+          {/*  src={prepareImagePath(params.row.image_1)}*/}
+          {/*  className="w-12 object-contain"*/}
+          {/*  alt={params.row.name}*/}
+          {/*/>*/}
+          img
         </div>
       ),
       sortable: false,
@@ -164,17 +164,17 @@ const MyOrderView = ({ orderId }) => {
                 <div className="flex flex-1 sm:flex-row flex-col">
                   <RowData
                     label="Payment method"
-                    value={order.payment_method}
+                    value={order?.payment_method}
                   />
                   <RowData
                     label="Total amount"
-                    value={amountFormatter(order.total_amount)}
+                    value={amountFormatter(order?.total_amount)}
                   />
                 </div>
                 <div className="flex flex-1 sm:flex-row flex-col">
                   <RowData
                     label="Status"
-                    value={<OrderStatusBadge status={order.status} />}
+                    value={<ActiveStatusBadge status={order?.status} />}
                   />
                   {order.status === "cancelled" ? (
                     <RowData

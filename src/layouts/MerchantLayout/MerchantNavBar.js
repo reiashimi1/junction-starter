@@ -25,18 +25,18 @@ import Link from "next/link";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 // import logo from "@/images/cloudtenviplogo.png";
 import API from "@/helpers/APIServices/API";
+import { merchantMenuItems } from "@/helpers/menuItems";
 
-const drawerWidth = 220;
+const drawerWidth = 240;
 
-const NavBar = ({ menuItems, children, window: windowProp }) => {
+const MerchantNavBar = ({ children, window: windowProp }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [variant, setVariant] = useState("permanent");
 
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
-
-  const user = useSelector((state) => state?.authSlice?.user);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,6 +68,9 @@ const NavBar = ({ menuItems, children, window: windowProp }) => {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+    setVariant((prevState) =>
+      prevState === "permanent" ? "temporary" : "permanent",
+    );
   };
 
   const container =
@@ -107,47 +110,16 @@ const NavBar = ({ menuItems, children, window: windowProp }) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { xs: "flex", sm: "none" } }}
+            sx={{ mr: 2, display: { xs: "flex", md: "none" } }}
           >
             <MenuOutlined />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 4, display: { xs: "none", sm: "flex" } }}
-          >
+          <Typography variant="h6" component="div" sx={{ flexGrow: 4 }}>
             <Link href="/">
               {/*<img className="logo" src={logo.src} alt="Logo" />*/}
               IMAGE
             </Link>
           </Typography>
-          {menuItems.map(
-            (item, index) =>
-              !item?.hide &&
-              !item?.admin && (
-                <Typography
-                  key={index}
-                  component="div"
-                  sx={{ flexGrow: 0.5, display: { xs: "none", sm: "block" } }}
-                >
-                  <div
-                    onClick={() => {
-                      if (pathname !== item.route) {
-                        router.push(item.route);
-                        handleNavigation();
-                      }
-                    }}
-                  >
-                    <button
-                      className={`${pathname === item.route ? "text-blue-400 text-lg" : "text-white"} hover:text-blue-400 navBarItem tracking-tight`}
-                    >
-                      {item.label}
-                    </button>
-                  </div>
-                </Typography>
-              ),
-          )}
-          {/*{!isObjectEmpty(user) && (*/}
           <div>
             <IconButton
               size="large"
@@ -195,14 +167,14 @@ const NavBar = ({ menuItems, children, window: windowProp }) => {
         sx={{
           width: { sm: drawerWidth },
           flexShrink: { sm: 0 },
-          display: { xs: "block", sm: "none" },
+          display: { xs: "none", md: "block" },
           overflowY: "hidden",
         }}
         aria-label="mailbox folders"
       >
         <Drawer
           container={container}
-          variant="temporary"
+          variant={variant}
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
@@ -212,15 +184,28 @@ const NavBar = ({ menuItems, children, window: windowProp }) => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              backgroundColor: "#c2bad9",
+              backgroundColor: "rgb(241 245 249)",
             },
           }}
         >
           <div>
-            <Toolbar />
+            {/*<Toolbar />*/}
+            {/*<Typography*/}
+            {/*  variant="h6"*/}
+            {/*  component="div"*/}
+            {/*  sx={{*/}
+            {/*    display: { xs: "none", sm: "flex" },*/}
+            {/*    justify: "center",*/}
+            {/*  }}*/}
+            {/*>*/}
+            <div className="flex justify-center h-12 my-8">
+              {/*<img src={logo.src} alt="Logo" />*/}
+              logo
+            </div>
+            {/*</Typography>*/}
             <Divider />
             <List>
-              {menuItems.map(
+              {merchantMenuItems.map(
                 (item, index) =>
                   !item?.hide && (
                     <div
@@ -270,4 +255,4 @@ const NavBar = ({ menuItems, children, window: windowProp }) => {
   );
 };
 
-export default NavBar;
+export default MerchantNavBar;

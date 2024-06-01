@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Add, Clear, Remove } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { prepareImagePath } from "@/helpers/functions";
 import {
   removeProduct,
   updateCart,
@@ -37,11 +36,11 @@ const CartProduct = ({ product }) => {
 
   return (
     <div className="relative flex md:flex-row flex-col md:space-y-none space-y-2 flex-1 py-6 md:px-4 bg-white rounded-xl shadow-lg flex justify-around items-center my-4">
-      <img
-        src={prepareImagePath(product?.main_image || product?.image_1)}
-        className="h-16 object-contain w-1/4"
-        alt={product.name}
-      />
+      {/*<img*/}
+      {/*  src={prepareImagePath(product?.main_image || product?.image_1)}*/}
+      {/*  className="h-16 object-contain w-1/4"*/}
+      {/*  alt={product.name}*/}
+      {/*/>*/}
       <div className="flex flex-col space-y-2 text-lg font-semibold text-center md:w-1/2 md:px-4">
         <div>{product.name}</div>
         {!!product?.discount_price ? (
