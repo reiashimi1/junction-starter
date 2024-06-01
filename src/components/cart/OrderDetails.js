@@ -2,13 +2,13 @@ import CustomInput from "@/core/inputs/CustomInput";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CustomToggleButton from "@/core/buttons/CustomToggleButton";
 import { amountFormatter, isArrayEmpty } from "@/helpers/functions";
 // import { paymentMethods } from "@/helpers/constants";
 import useValidate from "@/hooks/useValidate";
 // import makeOrderValidator from "@/helpers/validators/makeOrderValidator";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
 import {
   showErrorToast,
   showSuccessToast,
@@ -16,15 +16,15 @@ import {
 import { emptyCart } from "@/app/GlobalRedux/Features/shoppingCartSlice";
 import { Tooltip } from "@mui/material";
 import { InfoOutlined } from "@mui/icons-material";
+import PaymentMethods from "@/components/cart/PaymentMethods";
 
 const OrderDetails = ({ products, total }) => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-  const [address, setAddress] = useState("");
-  const [zipCode, setZipCode] = useState("");
+  const [amount, setamount] = useState("");
+  const [discountCode, setdiscountCode] = useState("");
   // const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
 
   const user = useSelector((state) => state?.authSlice?.user);
 
@@ -32,9 +32,8 @@ const OrderDetails = ({ products, total }) => {
   const { clearError, getError, validateErrors } = useValidate();
 
   const clearFields = () => {
-    setZipCode("");
-    setAddress("");
-    setDeliveryDate("");
+    setdiscountCode("");
+    setamount("");
     dispatch(emptyCart());
   };
 
@@ -42,27 +41,21 @@ const OrderDetails = ({ products, total }) => {
     // const errors = validateErrors(
     //   {
     //     paymentMethod,
-    //     address,
-    //     zipCode,
-    //     deliveryDate,
-    //     phoneNumber,
+    //     amount,
+    //     discountCode,
+    //     cardNumber,
     //   },
     //   makeOrderValidator,
     // );
     // if (errors) {
     //   return;
     // }
-    const filteredProducts = products.map((product) => ({
-      product_id: product.id,
-      quantity: product.quantity,
-    }));
+
     const payload = {
-      products: filteredProducts,
       // payment_method: paymentMethod.value,
-      zip_code: zipCode,
-      delivery_time: deliveryDate,
-      address,
-      phone_number: phoneNumber,
+      zip_code: discountCode,
+      amount,
+      card_number: cardNumber,
     };
     dispatch(showLoader("Please wait..."));
     API.post("/api/user/make-an-order", payload)
@@ -78,25 +71,26 @@ const OrderDetails = ({ products, total }) => {
 
   const disableSubmitButton = useMemo(() => isArrayEmpty(products), [products]);
 
-  const amountWithDiscount = 10;
+  const amountWithDiscount = 0;
 
   useEffect(() => {
     // const currentDateAndTime = moment().format("YYYY-MM-DDTHH:mm");
-    // setDeliveryDate(currentDateAndTime);
     if (!!user) {
       setEmail(user.email);
       setFullName(user.name);
-      setPhoneNumber(user?.phone_number || "");
+      setCardNumber(user?.card_number || "");
     }
   }, [user]);
 
   return (
     <div className="bg-slate-100 p-4 w-full rounded-lg shadow-xl">
       <div className="text-xl text-indigo-800 text-center font-semibold">
-        Order details
+        <div>
+          Charge your card <CreditCardIcon />{" "}
+        </div>
       </div>
+
       <div className="my-5 flex items-center justify-center">
-        toggle
         {/*<CustomToggleButton*/}
         {/*  choices={paymentMethods}*/}
         {/*  onChange={setPaymentMethod}*/}
@@ -104,6 +98,14 @@ const OrderDetails = ({ products, total }) => {
       </div>
       <div className="flex flex-col">
         <div className="flex sm:flex-row flex-col my-4 sm:space-x-4 sm:space-y-0 space-y-4">
+          <CustomInput
+            label="Full Name"
+            placeholder="Enter full name"
+            handleChange={setFullName}
+            value={fullName}
+            disabled
+            className="flex-1"
+          />
           <CustomInput
             label="Email"
             placeholder="Enter email"
@@ -113,34 +115,15 @@ const OrderDetails = ({ products, total }) => {
             disabled
             className="flex-1"
           />
-          <CustomInput
-            label="Full Name"
-            placeholder="Enter full name"
-            handleChange={setFullName}
-            value={fullName}
-            disabled
-            className="flex-1"
-          />
         </div>
         <div className="flex sm:flex-row flex-col sm:my-4 sm:space-x-4 sm:space-y-0 space-y-4">
           <CustomInput
-            label="Phone Number"
+            label="Card Number"
             handleChange={(value) =>
-              clearError("phoneNumber", value, setPhoneNumber)
+              clearError("cardNumber", value, setCardNumber)
             }
-            error={getError("phoneNumber")}
-            value={phoneNumber}
-            className="flex-1"
-          />
-          <CustomInput
-            label="Desirable delivery date/time"
-            placeholder="Enter data/time"
-            handleChange={(value) =>
-              clearError("deliveryDate", value, setDeliveryDate)
-            }
-            value={deliveryDate}
-            error={getError("deliveryDate")}
-            type="datetime-local"
+            error={getError("cardNumber")}
+            value={cardNumber}
             className="flex-1"
           />
         </div>
@@ -148,30 +131,31 @@ const OrderDetails = ({ products, total }) => {
           <CustomInput
             label={
               <div className="flex space-x-2">
-                <div>Address</div>
-                <Tooltip
-                  title="Only inside Halifax, Dartmouth, Bedford"
-                  arrow
-                  placement="top"
-                >
-                  <InfoOutlined className="text-slate-800" />
-                </Tooltip>
+                <div>Amount</div>
               </div>
             }
-            placeholder="Enter address"
-            handleChange={(value) => clearError("address", value, setAddress)}
-            value={address}
-            error={getError("address")}
+            placeholder="Enter amount"
+            handleChange={(value) => clearError("amount", value, setamount)}
+            value={amount}
+            error={getError("amount")}
             className="sm:w-2/3 sm:mr-3"
           />
           <CustomInput
-            label="ZIP Code"
-            placeholder="Enter zip code"
-            handleChange={(value) => clearError("zipCode", value, setZipCode)}
-            value={zipCode}
-            error={getError("zipCode")}
+            label="Discount Code"
+            placeholder="Enter Discount Code"
+            handleChange={(value) =>
+              clearError("discountCode", value, setdiscountCode)
+            }
+            value={discountCode}
+            error={getError("discountCode")}
             className="sm:w-1/3 sm:ml-3"
           />
+        </div>
+        <div className="flex flex-col my-4">
+          <div>Payment Methods</div>
+          <div className="mt-4">
+            <PaymentMethods />
+          </div>
         </div>
         <div className="my-4 font-semibold text-green-800 text-lg text-center">
           Total Amount: {amountFormatter(total)}
@@ -190,7 +174,7 @@ const OrderDetails = ({ products, total }) => {
             </div>
           </div>
         )}
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center mt-8">
           <button
             onClick={submitOrder}
             disabled={disableSubmitButton}
@@ -200,7 +184,7 @@ const OrderDetails = ({ products, total }) => {
                 : "bg-indigo-400 hover:bg-gradient-to-r hover:from-darkSlateBlue-400 hover:to-darkMagneta-600 hover:scale-105"
             }`}
           >
-            Order
+            CHARGE
           </button>
         </div>
       </div>

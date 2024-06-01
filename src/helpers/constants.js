@@ -16,6 +16,10 @@ export const userStatusesAdmin = [
   { label: "Inactive users", value: 0 },
 ];
 
+const paymentMethods = [
+  { label: "All payments", value: "all"},
+  { label: "All payments", value: "all"},
+]
 export const speedOptions = [
   { label: "20 kw/h", value: 20 },
   { label: "100 kw/h", value: 100 },
