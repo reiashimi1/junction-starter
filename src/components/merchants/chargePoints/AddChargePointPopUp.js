@@ -13,7 +13,7 @@ import {
 import stationValidator from "@/helpers/validators/stationValidator";
 import API from "@/helpers/APIServices/API";
 
-const AddStationPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
+const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -156,4 +156,4 @@ const AddStationPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
   );
 };
 
-export default AddStationPopUp;
+export default AddChargePointPopUp;

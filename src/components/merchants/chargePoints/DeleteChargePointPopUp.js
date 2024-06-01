@@ -9,7 +9,7 @@ import {
   showSuccessToast,
 } from "@/app/GlobalRedux/Features/toastSlice";
 
-const DeleteStationPopUp = ({
+const DeleteChargePointPopUp = ({
   deletePopUp,
   setDeletePopUp,
   selectedRow,
@@ -51,4 +51,4 @@ const DeleteStationPopUp = ({
   );
 };
 
-export default DeleteStationPopUp;
+export default DeleteChargePointPopUp;

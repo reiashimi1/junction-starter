@@ -14,7 +14,7 @@ import {
 import { appendToPayload, isObjectEmpty } from "@/helpers/functions";
 import API from "@/helpers/APIServices/API";
 
-const EditStationPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
+const EditChargePointPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -177,4 +177,4 @@ const EditStationPopUp = ({ station, editPopUp, setEditPopUp, onSuccess }) => {
   );
 };
 
-export default EditStationPopUp;
+export default EditChargePointPopUp;
