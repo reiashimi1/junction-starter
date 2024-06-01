@@ -306,23 +306,24 @@ module.exports = {
       //   0: '0',
       //   DEFAULT: '1'
       // },
-      // fontSize: {
-      //   xs: ['0.75rem', { lineHeight: '1rem' }],
-      //   sm: ['0.875rem', { lineHeight: '1.25rem' }],
-      //   base: ['1rem', { lineHeight: '1.5rem' }],
-      //   lg: ['1.125rem', { lineHeight: '1.75rem' }],
-      //   xl: ['1.25rem', { lineHeight: '1.75rem' }],
-      //   '2xl': ['1.5rem', { lineHeight: '2rem' }],
-      //   '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-      //   '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
-      //   '5xl': ['3rem', { lineHeight: '1.125' }],
-      //   '6xl': ['3.75rem', { lineHeight: '1.125' }],
-      //   '7xl': ['4.5rem', { lineHeight: '1' }],
-      //   '8xl': ['6rem', { lineHeight: '1' }],
-      //   '9xl': ['8rem', { lineHeight: '1' }],
-      //   'xl-normal': ['2rem', { lineHeight: '2.6rem' }],
-      //   'xl-title': ['4rem', { lineHeight: '4rem' }]
-      // },
+      fontSize: {
+        xxs: ['0.6rem', { lineHeight: '0.75rem' }],
+        xs: ['0.75rem', { lineHeight: '1rem' }],
+        sm: ['0.875rem', { lineHeight: '1.25rem' }],
+        base: ['1rem', { lineHeight: '1.5rem' }],
+        lg: ['1.125rem', { lineHeight: '1.75rem' }],
+        xl: ['1.25rem', { lineHeight: '1.75rem' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        '5xl': ['3rem', { lineHeight: '1.125' }],
+        '6xl': ['3.75rem', { lineHeight: '1.125' }],
+        '7xl': ['4.5rem', { lineHeight: '1' }],
+        '8xl': ['6rem', { lineHeight: '1' }],
+        '9xl': ['8rem', { lineHeight: '1' }],
+        'xl-normal': ['2rem', { lineHeight: '2.6rem' }],
+        'xl-title': ['4rem', { lineHeight: '4rem' }]
+      },
       // fontWeight: {
       //   thin: '100',
       //   extralight: '200',
@@ -646,17 +647,17 @@ module.exports = {
       //   ...theme('spacing'),
       //   ...negative(theme('spacing'))
       // }),
-      // transitionDuration: {
-      //   DEFAULT: '150ms',
-      //   75: '75ms',
-      //   100: '100ms',
-      //   150: '150ms',
-      //   200: '200ms',
-      //   300: '300ms',
-      //   500: '500ms',
-      //   700: '700ms',
-      //   1000: '1000ms'
-      // },
+      transitionDuration: {
+        DEFAULT: '150ms',
+        75: '75ms',
+        100: '100ms',
+        150: '150ms',
+        200: '200ms',
+        300: '300ms',
+        500: '500ms',
+        700: '700ms',
+        1000: '1000ms'
+      },
       // transitionDelay: {
       //   75: '75ms',
       //   100: '100ms',
@@ -667,41 +668,41 @@ module.exports = {
       //   700: '700ms',
       //   1000: '1000ms'
       // },
-      // transitionProperty: {
-      //   none: 'none',
-      //   all: 'all',
-      //   DEFAULT:
-      //       'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform',
-      //   colors: 'background-color, border-color, color, fill, stroke',
-      //   opacity: 'opacity',
-      //   shadow: 'box-shadow',
-      //   transform: 'transform'
-      // },
-      // transitionTimingFunction: {
-      //   DEFAULT: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      //   linear: 'linear',
-      //   in: 'cubic-bezier(0.4, 0, 1, 1)',
-      //   out: 'cubic-bezier(0, 0, 0.2, 1)',
-      //   'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)'
-      // },
-      // translate: (theme, { negative }) => ({
-      //   ...theme('spacing'),
-      //   ...negative(theme('spacing')),
-      //   '1/2': '50%',
-      //   '1/3': '33.333333%',
-      //   '2/3': '66.666667%',
-      //   '1/4': '25%',
-      //   '2/4': '50%',
-      //   '3/4': '75%',
-      //   full: '100%',
-      //   '-1/2': '-50%',
-      //   '-1/3': '-33.333333%',
-      //   '-2/3': '-66.666667%',
-      //   '-1/4': '-25%',
-      //   '-2/4': '-50%',
-      //   '-3/4': '-75%',
-      //   '-full': '-100%'
-      // }),
+      transitionProperty: {
+        none: 'none',
+        all: 'all',
+        DEFAULT:
+            'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform',
+        colors: 'background-color, border-color, color, fill, stroke',
+        opacity: 'opacity',
+        shadow: 'box-shadow',
+        transform: 'transform'
+      },
+      transitionTimingFunction: {
+        DEFAULT: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        linear: 'linear',
+        in: 'cubic-bezier(0.4, 0, 1, 1)',
+        out: 'cubic-bezier(0, 0, 0.2, 1)',
+        'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)'
+      },
+      translate: (theme, { negative }) => ({
+        ...theme('spacing'),
+        ...negative(theme('spacing')),
+        '1/2': '50%',
+        '1/3': '33.333333%',
+        '2/3': '66.666667%',
+        '1/4': '25%',
+        '2/4': '50%',
+        '3/4': '75%',
+        full: '100%',
+        '-1/2': '-50%',
+        '-1/3': '-33.333333%',
+        '-2/3': '-66.666667%',
+        '-1/4': '-25%',
+        '-2/4': '-50%',
+        '-3/4': '-75%',
+        '-full': '-100%'
+      }),
       // width: (theme) => ({
       //   auto: 'auto',
       //   ...theme('spacing'),
