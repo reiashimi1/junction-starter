@@ -1,7 +1,7 @@
 import { ShoppingCart } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 import Link from "next/link";
-import { isObjectEmpty, prepareImagePath } from "@/helpers/functions";
+import { isObjectEmpty } from "@/helpers/functions";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import { useRouter } from "next/navigation";
@@ -38,11 +38,12 @@ const ProductCard = ({
       onClick={navigateToProductDetails}
     >
       <div className="bg-none flex items-center justify-center p-2">
-        <img
-          src={prepareImagePath(product.image_1 || product.main_image)}
-          className="h-60 object-contain"
-          alt={product.name}
-        />
+        {/*<img*/}
+        {/*  src={prepareImagePath(product.image_1 || product.main_image)}*/}
+        {/*  className="h-60 object-contain"*/}
+        {/*  alt={product.name}*/}
+        {/*/>*/}
+        img
       </div>
       <div className="mt-2 text-center text-xl font-semibold h-24">
         {product.name}

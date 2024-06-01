@@ -12,7 +12,7 @@ import { ChangeCircle, Visibility } from "@mui/icons-material";
 import {
   amountFormatter,
   dateFormatter,
-  OrderStatusBadge,
+  ActiveStatusBadge,
 } from "@/helpers/functions";
 import { useRouter } from "next/navigation";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
@@ -88,7 +88,7 @@ const UserOrdersView = () => {
       disableColumnMenu: true,
       renderCell: (params) => (
         <div className="flex justify-end">
-          <OrderStatusBadge status={params.row.status} />
+          <ActiveStatusBadge status={params.row.status} />
         </div>
       ),
     },

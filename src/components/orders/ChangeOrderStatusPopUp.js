@@ -5,12 +5,10 @@ import { useDispatch } from "react-redux";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
 import { ChangeCircle } from "@mui/icons-material";
-import { orderStatuses } from "@/helpers/constants";
 import SelectInput from "@/core/inputs/SelectInput";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
 import CustomInput from "@/core/inputs/CustomInput";
 import useValidate from "@/hooks/useValidate";
-import changeOrderStatusValidator from "@/helpers/validators/changeOrderStatusValidator";
 
 const ChangeOrderStatusPopUp = ({
   changeStatusPopUp,
@@ -18,20 +16,20 @@ const ChangeOrderStatusPopUp = ({
   selectedOrder,
   onSuccess,
 }) => {
-  const [status, setStatus] = useState(orderStatuses[0].value);
+  const [status, setStatus] = useState(1);
   const [description, setDescription] = useState("");
 
   const dispatch = useDispatch();
   const { clearError, getError, validateErrors } = useValidate();
 
   const changeStatus = () => {
-    const errors = validateErrors(
-      { status, description },
-      changeOrderStatusValidator,
-    );
-    if (errors) {
-      return;
-    }
+    // const errors = validateErrors(
+    //   { status, description },
+    //   changeOrderStatusValidator,
+    // );
+    // if (errors) {
+    //   return;
+    // }
     const payload = { status, reason: description };
     dispatch(showLoader("Please wait"));
     API.post(`/api/admin/orders/${selectedOrder.id}/update-status`, payload)
@@ -67,15 +65,15 @@ const ChangeOrderStatusPopUp = ({
       isButtonDisabled={disableButton}
     >
       <div className="flex flex-col my-8">
-        <SelectInput
-          label="Status"
-          value={status}
-          onChange={setStatus}
-          id="status"
-          items={orderStatuses}
-          minWidth="300"
-          className="flex flex-1 mb-4"
-        />
+        {/*<SelectInput*/}
+        {/*  label="Status"*/}
+        {/*  value={status}*/}
+        {/*  onChange={setStatus}*/}
+        {/*  id="status"*/}
+        {/*  items={orderStatuses}*/}
+        {/*  minWidth="300"*/}
+        {/*  className="flex flex-1 mb-4"*/}
+        {/*/>*/}
         {status === "cancelled" && (
           <CustomInput
             label="Description"
