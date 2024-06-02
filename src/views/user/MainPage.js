@@ -1,12 +1,12 @@
 "use client";
 
-import MapFilter from "@/views/user/MapFilter";
+import MapComponent from "@/components/map/MapComponent";
+import Layout from "@/layouts/UserLayout/Layout";
 
 const MainPageView = () => {
   return (
-    <div>
-      <div>1</div>
-        <MapFilter />
+    <div className="flex flex-col justify-center py-8 px-2">
+      <MapComponent />
     </div>
   );
 };

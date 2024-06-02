@@ -19,7 +19,7 @@ import { Tooltip } from "@mui/material";
 import { InfoOutlined } from "@mui/icons-material";
 import PaymentMethods from "@/components/cart/PaymentMethods";
 
-const OrderDetails = ({ products, total }) => {
+const OrderDetails = () => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [amount, setamount] = useState("");
@@ -70,7 +70,8 @@ const OrderDetails = ({ products, total }) => {
       .finally(() => dispatch(hideLoader()));
   };
 
-  const disableSubmitButton = useMemo(() => isArrayEmpty(products), [products]);
+  // const disableSubmitButton = useMemo(() => isArrayEmpty(products), [products]);
+  const disableSubmitButton = false;
 
   const amountWithDiscount = 0;
 
@@ -158,23 +159,23 @@ const OrderDetails = ({ products, total }) => {
             <PaymentMethods />
           </div>
         </div>
-        <div className="my-4 font-semibold text-green-800 text-lg text-center">
-          Total Amount: {amountFormatter(total)}
-        </div>
-        {!!total && (
-          <div className="flex space-x-2 items-center justify-center text-green-800 font-bold text-lg">
-            <Tooltip
-              title="Discount applied only for cash on delivery option"
-              arrow
-            >
-              <InfoOutlined className="text-sky-800" />
-            </Tooltip>
-            <div>
-              Amount with discount applied:{" "}
-              {amountFormatter(amountWithDiscount)}
-            </div>
-          </div>
-        )}
+        {/*<div className="my-4 font-semibold text-green-800 text-lg text-center">*/}
+        {/*  Total Amount: {amountFormatter(total)}*/}
+        {/*</div>*/}
+        {/*{!!total && (*/}
+        {/*  <div className="flex space-x-2 items-center justify-center text-green-800 font-bold text-lg">*/}
+        {/*    <Tooltip*/}
+        {/*      title="Discount applied only for cash on delivery option"*/}
+        {/*      arrow*/}
+        {/*    >*/}
+        {/*      <InfoOutlined className="text-sky-800" />*/}
+        {/*    </Tooltip>*/}
+        {/*    <div>*/}
+        {/*      Amount with discount applied:{" "}*/}
+        {/*      {amountFormatter(amountWithDiscount)}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*)}*/}
         <div className="flex justify-center mt-8">
           <button
             onClick={submitOrder}
