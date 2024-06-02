@@ -1,10 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Add, Clear, Remove } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import {
-  removeProduct,
-  updateCart,
-} from "@/app/GlobalRedux/Features/shoppingCartSlice";
 import { useDispatch } from "react-redux";
 
 const CartProduct = ({ product }) => {
@@ -13,19 +9,19 @@ const CartProduct = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleMinusClick = () => {
-    dispatch(updateCart({ product, quantity: quantity - 1 }));
+    // dispatch(updateCart({ product, quantity: quantity - 1 }));
   };
 
   const handlePlusClick = () => {
-    dispatch(updateCart({ product, quantity: quantity + 1 }));
+    // dispatch(updateCart({ product, quantity: quantity + 1 }));
   };
 
   const handleQuantityChange = (e) => {
-    dispatch(updateCart({ product, quantity: Number(e.target.value) }));
+    // dispatch(updateCart({ product, quantity: Number(e.target.value) }));
   };
 
   const removeProductFromCart = () => {
-    dispatch(removeProduct(product.id));
+    // dispatch(removeProduct(product.id));
   };
 
   const disabledButton = useMemo(() => quantity <= 1, [quantity]);

@@ -14,14 +14,14 @@ const PaymentMethods = ({ selectedMethod, setSelectedMethod }) => {
         color="primary"
         sx={{ fontSize: "1.2rem", height: 40 }}
         label="Credit Card"
-        avatar={<Avatar alt="Credit Card" src="Credit Card" />}
+        avatar={<Avatar alt="Credit Card" />}
         variant={selectedMethod !== "credit" ? "outlined" : "contained"}
         onClick={() => handleClick("credit")}
       />
       <Chip
         color="primary"
         sx={{ fontSize: "1.2rem", height: 40 }}
-        avatar={<Avatar alt="PayPal" src="PayPal" />}
+        avatar={<Avatar alt="PayPal" />}
         label="PayPal"
         variant={selectedMethod !== "PayPal" ? "outlined" : "contained"}
         onClick={() => handleClick("PayPal")}
@@ -29,7 +29,7 @@ const PaymentMethods = ({ selectedMethod, setSelectedMethod }) => {
       <Chip
         color="primary"
         sx={{ fontSize: "1.2rem", height: 40 }}
-        avatar={<Avatar alt="POK" src="POK" />}
+        avatar={<Avatar alt="POK" />}
         label="POK"
         variant={selectedMethod !== "POK" ? "outlined" : "contained"}
         onClick={() => handleClick("POK")}

@@ -10,6 +10,7 @@ import {
   Https,
   ElectricCarSharp,
   CreditCard,
+  CasinoSharp,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, refreshUser } from "@/app/GlobalRedux/Features/authSlice";
@@ -21,6 +22,7 @@ import { theme } from "@/helpers/themeColors";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
 import { useRouter } from "next/navigation";
+import PlaygroundView from "@/views/PlaygroundView";
 
 const AccountView = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -89,6 +91,13 @@ const AccountView = () => {
       icon: <ParkSharp />,
       label: "Plant",
       view: <Contribute />,
+      access: true,
+    },
+    {
+      id: "play",
+      icon: <CasinoSharp />,
+      label: "Try your luck",
+      view: <PlaygroundView />,
       access: true,
     },
   ];

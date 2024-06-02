@@ -1,23 +1,30 @@
 "use client";
 
 import MapComponent from "@/components/map/MapComponent";
-import Layout from "@/layouts/UserLayout/Layout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BottomMenu from "@/components/users/BottomMenu";
-import MapFilter from "@/views/user/MapFilter";
-import SearchInput from "@/core/inputs/SearchInput";
-import {
-  DirectionsRenderer,
-  GoogleMap,
-  LoadScript,
-  Marker,
-} from "@react-google-maps/api";
-import MapMarker from "@/components/map/MapMarker";
 import LandingCard from "@/components/landingPage/LandingCard";
 import AccountView from "@/views/AccountView";
+import {
+  hideLoginSpinner,
+  showLoginSpinner,
+} from "@/app/GlobalRedux/Features/loginSpinnerSlice";
+import { useDispatch } from "react-redux";
+import LoginSpinner from "@/layouts/LoginSpinner";
 
 const MainPageView = () => {
-  const [screen, setScreen] = useState(1);
+  const [screen, setScreen] = useState(0);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(showLoginSpinner());
+    const timer = setTimeout(() => {
+      dispatch(hideLoginSpinner());
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col justify-center">
@@ -31,6 +38,7 @@ const MainPageView = () => {
         {screen === 1 && <LandingCard />}
         {screen === 2 && <AccountView />}
       </>
+      {/*<LoginSpinner />*/}
     </div>
   );
 };

@@ -11,9 +11,6 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "@/app/GlobalRedux/Features/toastSlice";
-import { emptyCart } from "@/app/GlobalRedux/Features/shoppingCartSlice";
-import { Tooltip } from "@mui/material";
-import { InfoOutlined } from "@mui/icons-material";
 import
   PaymentMethods from "@/components/cart/PaymentMethods";
 import chargeCardValidator from "@/helpers/validators/chargeCardValidator";
