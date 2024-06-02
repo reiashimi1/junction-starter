@@ -11,6 +11,7 @@ import {
 } from "@/app/GlobalRedux/Features/loginSpinnerSlice";
 import { useDispatch } from "react-redux";
 import LoginSpinner from "@/layouts/LoginSpinner";
+import withAuth from "@/helpers/auth/userWrapper";
 
 const MainPageView = () => {
   const [screen, setScreen] = useState(0);
@@ -43,4 +44,4 @@ const MainPageView = () => {
   );
 };
 
-export default MainPageView;
+export default withAuth(MainPageView);
