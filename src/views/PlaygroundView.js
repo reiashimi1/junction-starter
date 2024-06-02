@@ -1,10 +1,8 @@
 "use client";
 
-import Roulette from "@/core/Roulette";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import SwipeRightIcon from "@mui/icons-material/SwipeRight";
 
 const PlaygroundView = () => {
   return (
@@ -26,12 +24,13 @@ const PlaygroundView = () => {
         <span className="mb-2">Spin to Win </span>
         <Divider />
         <div className="flex flex-col items-center justify-center">
-          <Roulette airlineId="123" />
+          {/*<Roulette airlineId="123" />*/}
+          test
         </div>
         <NotificationsActiveIcon />
         <span className="mb-2" style={{ fontSize: "14px" }}>
-          Participate in our Spin to win challenge and win up to 20% discount
-          in your next charging session. Spin every day to win points and
+          Participate in our Spin to win challenge and win up to 20% discount in
+          your next charging session. Spin every day to win points and
           discounts. <span style={{ fontWeight: "bold" }}>Try your luck!</span>
         </span>
       </div>
