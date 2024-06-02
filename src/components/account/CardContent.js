@@ -137,9 +137,6 @@ const Card = ({
       </CreditCard>
 
       <FormContainer>
-        <Typography variant="h6" gutterBottom>
-          User Points and Referral Code
-        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
