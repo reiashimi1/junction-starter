@@ -12,19 +12,40 @@ import {
   CreditCard,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshUser } from "@/app/GlobalRedux/Features/authSlice";
+import { logout, refreshUser } from "@/app/GlobalRedux/Features/authSlice";
 import Card from "@/components/account/CardContent";
 import Contribute from "@/components/account/Contribute";
 import CarInformation from "@/components/account/CarInformation";
+import MenuItem from "@mui/material/MenuItem";
+import { theme } from "@/helpers/themeColors";
+import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
+import API from "@/helpers/APIServices/API";
+import { useRouter } from "next/navigation";
 
 const AccountView = () => {
   const [activeItem, setActiveItem] = useState(null);
 
   const dispatch = useDispatch();
+  const router = useRouter();
   const user = useSelector((state) => state?.authSlice?.user);
 
   const handleSuccess = (name, email, phoneNumber) => {
     dispatch(refreshUser({ name, email, phoneNumber }));
+  };
+
+  const handleLogout = () => {
+    dispatch(showLoader("Logging out"));
+    API.post("/auth/lgogout")
+      .then(() => {
+        dispatch(showLoader("Logged out successfully"));
+        dispatch(logout());
+      })
+      .catch(() => console.error("Could not logout user"))
+      .finally(() => {
+        router.push("/login");
+        dispatch(hideLoader());
+        dispatch(logout());
+      });
   };
 
   const Tabs = [
@@ -76,8 +97,13 @@ const AccountView = () => {
     <div className="flex md:flex-row flex-col bg-slate-50 w-full pr-5 border shadow-xl h-full bg-gradient-to-b from-slate-100 to-slate-300 py-4">
       <div className="top-0 min-w-max md:border-r md:border-b-0 border-b md:px-7 px-5 md:pb-0 pb-3">
         <div className="mb-4">
-          <div className="font-semibold text-2xl break-words mb-1 text-gray-700 text-center mt-10">
-            {user?.firstName} {user?.lastName}
+          <div className="flex items-center justify-between font-semibold text-2xl break-words mb-1 text-gray-700 text-center mt-10">
+            <div>
+              {user?.firstName} {user?.lastName}
+            </div>
+            <MenuItem onClick={handleLogout}>
+              <div style={{ color: theme.palette.red.redA400 }}>Log out</div>
+            </MenuItem>
           </div>
           <hr className="my-3" />
         </div>
