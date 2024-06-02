@@ -9,7 +9,7 @@ import BatteryCharging60Icon from '@mui/icons-material/BatteryCharging60';
  import emptyLottie from "@/images/car-lottie.json";
  const CarInfoCard = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: '#d0cdcd',
   color: '#000',
   borderRadius: 15,
   padding: theme.spacing(2),

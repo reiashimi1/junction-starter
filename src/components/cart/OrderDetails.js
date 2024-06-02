@@ -2,11 +2,8 @@ import CustomInput from "@/core/inputs/CustomInput";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CustomToggleButton from "@/core/buttons/CustomToggleButton";
 import { amountFormatter, isArrayEmpty } from "@/helpers/functions";
-// import { paymentMethods } from "@/helpers/constants";
 import useValidate from "@/hooks/useValidate";
-// import makeOrderValidator from "@/helpers/validators/makeOrderValidator";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import API from "@/helpers/APIServices/API";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
@@ -18,14 +15,16 @@ import { emptyCart } from "@/app/GlobalRedux/Features/shoppingCartSlice";
 import { Tooltip } from "@mui/material";
 import { InfoOutlined } from "@mui/icons-material";
 import PaymentMethods from "@/components/cart/PaymentMethods";
+import chargeCardValidator from "@/helpers/validators/chargeCardValidator";
 
 const OrderDetails = () => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-  const [amount, setamount] = useState("");
-  const [discountCode, setdiscountCode] = useState("");
+  const [amount, setAmount] = useState("");
+  const [discountCode, setDiscountCode] = useState("");
   // const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
   const [cardNumber, setCardNumber] = useState("");
+  const [selectedMethod, setSelectedMethod] = useState("");
 
   const user = useSelector((state) => state?.authSlice?.user);
 
@@ -33,24 +32,24 @@ const OrderDetails = () => {
   const { clearError, getError, validateErrors } = useValidate();
 
   const clearFields = () => {
-    setdiscountCode("");
-    setamount("");
-    dispatch(emptyCart());
+    setDiscountCode("");
+    setAmount("");
+    // dispatch(emptyCart());
   };
 
   const submitOrder = () => {
-    // const errors = validateErrors(
-    //   {
-    //     paymentMethod,
-    //     amount,
-    //     discountCode,
-    //     cardNumber,
-    //   },
-    //   makeOrderValidator,
-    // );
-    // if (errors) {
-    //   return;
-    // }
+    const errors = validateErrors(
+      {
+        selectedMethod,
+        amount,
+        discountCode,
+        cardNumber,
+      },
+      chargeCardValidator,
+    );
+    if (errors) {
+      return;
+    }
 
     const payload = {
       // payment_method: paymentMethod.value,
@@ -79,7 +78,7 @@ const OrderDetails = () => {
     // const currentDateAndTime = moment().format("YYYY-MM-DDTHH:mm");
     if (!!user) {
       setEmail(user.email);
-      setFullName(user.name);
+      setFullName(user?.firstName + " " + user?.lastName);
       setCardNumber(user?.card_number || "");
     }
   }, [user]);
@@ -137,7 +136,7 @@ const OrderDetails = () => {
               </div>
             }
             placeholder="Enter amount"
-            handleChange={(value) => clearError("amount", value, setamount)}
+            handleChange={(value) => clearError("amount", value, setAmount)}
             value={amount}
             error={getError("amount")}
             className="sm:w-2/3 sm:mr-3"
@@ -146,7 +145,7 @@ const OrderDetails = () => {
             label="Discount Code"
             placeholder="Enter Discount Code"
             handleChange={(value) =>
-              clearError("discountCode", value, setdiscountCode)
+              clearError("discountCode", value, setDiscountCode)
             }
             value={discountCode}
             error={getError("discountCode")}
@@ -156,7 +155,10 @@ const OrderDetails = () => {
         <div className="flex flex-col my-4">
           <div>Payment Methods</div>
           <div className="mt-4">
-            <PaymentMethods />
+            <PaymentMethods
+              selectedMethod={selectedMethod}
+              setSelectedMethod={setSelectedMethod}
+            />
           </div>
         </div>
         {/*<div className="my-4 font-semibold text-green-800 text-lg text-center">*/}

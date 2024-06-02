@@ -1,16 +1,21 @@
 "use client";
 
-import Layout from "@/layouts/GuestLayout/Layout";
 import { useState } from "react";
 import SidebarItem from "@/components/account/SidebarItem";
 import ChangeName from "@/components/account/ChangeName";
-import ChangeEmail from "@/components/account/ChangeEmail";
 import ChangePassword from "@/components/account/ChangePassword";
-import { Person, Email, Https, Phone, CreditCard } from "@mui/icons-material";
+import {
+  Person,
+  ParkSharp,
+  Https,
+  ElectricCarSharp,
+  CreditCard,
+} from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "@/app/GlobalRedux/Features/authSlice";
-import ChangePhoneNumber from "@/components/account/ChangePhoneNumber";
 import Card from "@/components/account/CardContent";
+import Contribute from "@/components/account/Contribute";
+import CarInformation from "@/components/account/CarInformation";
 
 const AccountView = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -38,6 +43,13 @@ const AccountView = () => {
       access: true,
     },
     {
+      id: "carInformation",
+      icon: <ElectricCarSharp />,
+      label: "Car information",
+      view: <CarInformation />,
+      access: true,
+    },
+    {
       id: "password",
       icon: <Https />,
       label: "Change password",
@@ -51,10 +63,17 @@ const AccountView = () => {
       view: <Card />,
       access: true,
     },
+    {
+      id: "plant",
+      icon: <ParkSharp />,
+      label: "Plant",
+      view: <Contribute />,
+      access: true,
+    },
   ];
 
   return (
-    <div className="flex md:flex-row flex-col bg-slate-50 2xl:w-4/5 mx-auto pr-5 py-4 rounded-xl border shadow-xl md:w-2/3 w-5/6 min-h-screen">
+    <div className="flex md:flex-row flex-col bg-slate-50 w-full pr-5 border shadow-xl h-full bg-gradient-to-b from-slate-100 to-slate-300 py-4">
       <div className="top-0 min-w-max md:border-r md:border-b-0 border-b md:px-7 px-5 md:pb-0 pb-3">
         <div className="mb-4">
           <div className="font-semibold text-2xl break-words mb-1 text-gray-700 text-center mt-10">
