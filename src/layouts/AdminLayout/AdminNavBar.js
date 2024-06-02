@@ -48,7 +48,7 @@ const AdminNavBar = ({ children, window: windowProp }) => {
 
   const handleLogout = () => {
     dispatch(showLoader("Logging out"));
-    API.post("/auth/lgogout")
+    API.post("/auth/logout")
       .then(() => {
         dispatch(showLoader("Logged out successfully"));
         dispatch(logout());
