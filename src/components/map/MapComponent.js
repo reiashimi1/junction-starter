@@ -97,55 +97,55 @@ const MapComponent = () => {
     }
   }, [origin, destinations]);
 
-  // console.log(screen);
-
   return (
     <>
       <div className="flex inset-0 z-10">
         <BottomMenu changeScreen={setScreen} />
       </div>
-      <div className={`${screen === 0 ? "block" : "hidden"}`}>
-        <div className="flex md:flex-row flex-col items-center justify-around p-4 mb-4 rounded-xl bg-slate-200 inset-0 z-10">
-          <MapFilter />
-          <div className="flex relative md:w-1/3 md:mt-0 mt-2">
-            <SearchInput qs={qs} onSearch={setQs} />
+      {screen === 0 && (
+        <div>
+          <div className="flex md:flex-row flex-col items-center justify-around p-4 mb-4 rounded-xl bg-slate-200 inset-0 z-10">
+            <MapFilter />
+            <div className="flex relative md:w-1/3 md:mt-0 mt-2">
+              <SearchInput qs={qs} onSearch={setQs} />
+            </div>
+          </div>
+          <div className="relative z-0">
+            <LoadScript googleMapsApiKey={apiKey}>
+              <GoogleMap
+                mapContainerStyle={{ height: "600px", width: "100%" }}
+                zoom={10}
+                center={sampleOrigin}
+                onLoad={(map) => {
+                  setMapLoaded(true);
+                }}
+              >
+                {directionsResults.map(
+                  (result, index) =>
+                    result && (
+                      <DirectionsRenderer
+                        key={index}
+                        directions={result}
+                        options={{
+                          suppressMarkers: true,
+                          preserveViewport: true,
+                        }}
+                      />
+                    ),
+                )}
+                {origin && <Marker position={origin} />}
+                {locations.map((location) => (
+                  <MapMarker
+                    key={location.id}
+                    location={location}
+                    setDestination={setDestinations}
+                  />
+                ))}
+              </GoogleMap>
+            </LoadScript>
           </div>
         </div>
-        <div className="relative z-0">
-          <LoadScript googleMapsApiKey={apiKey}>
-            <GoogleMap
-              mapContainerStyle={{ height: "600px", width: "100%" }}
-              zoom={10}
-              center={sampleOrigin}
-              onLoad={(map) => {
-                setMapLoaded(true);
-              }}
-            >
-              {directionsResults.map(
-                (result, index) =>
-                  result && (
-                    <DirectionsRenderer
-                      key={index}
-                      directions={result}
-                      options={{
-                        suppressMarkers: true,
-                        preserveViewport: true,
-                      }}
-                    />
-                  ),
-              )}
-              {origin && <Marker position={origin} />}
-              {locations.map((location) => (
-                <MapMarker
-                  key={location.id}
-                  location={location}
-                  setDestination={setDestinations}
-                />
-              ))}
-            </GoogleMap>
-          </LoadScript>
-        </div>
-      </div>
+      )}
       {screen === 1 && <LandingCard />}
       {screen === 2 && <AccountView />}
     </>
