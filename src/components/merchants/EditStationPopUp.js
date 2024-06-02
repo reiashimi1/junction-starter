@@ -67,9 +67,6 @@ const EditStationPopUp = ({
       setAddress(station?.address);
       setLatitude(station?.latitude);
       setLongitude(station?.longitude);
-      setPrice(station?.price);
-      setDiscount(station?.discount);
-      setRequests(station?.requests);
     }
   }, [station]);
 
@@ -96,7 +93,7 @@ const EditStationPopUp = ({
             className="flex-1"
           />
           <CustomInput
-            label="address"
+            label="Address"
             placeholder="Enter address"
             handleChange={(value) => clearError("address", value, setAddress)}
             value={address}

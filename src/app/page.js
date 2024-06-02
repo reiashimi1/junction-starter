@@ -1,9 +1,9 @@
-import LandingPageView from "@/views/LandingPageView";
+import MainPageView from "@/views/user/MainPage";
 
 export default function Home() {
   return (
     <main>
-      <LandingPageView />
+      <MainPageView />;
     </main>
   );
 }

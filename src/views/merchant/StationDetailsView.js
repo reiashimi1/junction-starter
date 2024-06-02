@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import API from "@/helpers/APIServices/API";
 import { hideLoader, showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
 import { showErrorToast } from "@/app/GlobalRedux/Features/toastSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { amountFormatter, isObjectEmpty } from "@/helpers/functions";
 import { IconButton, Tooltip } from "@mui/material";
 import { ChangeCircle, Delete, Edit } from "@mui/icons-material";
@@ -21,6 +21,7 @@ import DeleteStationPopUp from "@/components/merchants/DeleteStationPopUp";
 import DeleteChargePointPopUp from "@/components/merchants/chargePoints/DeleteChargePointPopUp";
 import EditChargePointPopUp from "@/components/merchants/chargePoints/EditChargePointPopUp";
 import AddChargePointPopUp from "@/components/merchants/chargePoints/AddChargePointPopUp";
+import ChangeChargePointStatusPopUp from "@/components/merchants/chargePoints/ChangeChargePointStatusPopUp";
 
 const StationDetailsView = ({ id }) => {
   const [station, setStation] = useState("");
@@ -32,6 +33,8 @@ const StationDetailsView = ({ id }) => {
   const [deletePopUp, setDeletePopUp] = useState(false);
   const [openChangeStatusPopUp, setOpenChangeStatusPopUp] = useState(false);
   const [updated, setUpdated] = useState(0);
+
+  const merchant = useSelector((state) => state?.authSlice?.user?.merchant);
 
   const dispatch = useDispatch();
 
@@ -51,24 +54,12 @@ const StationDetailsView = ({ id }) => {
   };
 
   const columns = [
-    {
-      field: "name",
-      headerName: "Name",
-      minWidth: 100,
-      maxWidth: 200,
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      minWidth: 200,
-      maxWidth: 350,
-    },
-    {
-      field: "speed",
-      headerName: "Speed",
-      minWidth: 80,
-      maxWidth: 120,
-    },
+    // {
+    //   field: "speed",
+    //   headerName: "Speed",
+    //   minWidth: 80,
+    //   maxWidth: 120,
+    // },
     {
       field: "price",
       headerName: "Price",
@@ -131,20 +122,16 @@ const StationDetailsView = ({ id }) => {
   ];
 
   const getStationDetails = () => {
-    // dispatch(showLoader("Please wait..."));
-    // API.get(`/api/station/${id}`)
-    //   .then((response) => {
-    setChargePoints([
-      { id: 11113, speed: 12, price: 333, dynamicPrice: 51, request: 10 },
-    ]);
-    // })
-    // .catch(() => dispatch(showErrorToast("Something went wrong")))
-    // .finally(() => dispatch(hideLoader()));
+    dispatch(showLoader("Please wait..."));
+    API.get(`/merchants/${merchant.id}/stations/${id}`)
+      .then((response) => {
+        const { station } = response.data.data;
+        setStation(station);
+        setChargePoints(station.ports);
+      })
+      .catch(() => dispatch(showErrorToast("Something went wrong")))
+      .finally(() => dispatch(hideLoader()));
   };
-
-  // useEffect(() => {
-  //
-  // }, [id]);
 
   const updateData = () => {
     setUpdated((prevState) => prevState + 1);
@@ -155,62 +142,37 @@ const StationDetailsView = ({ id }) => {
     <Layout>
       <div className="flex flex-col pt-24 pb-8 px-4 sm:mx-2">
         <BackButton className="ml-4" />
-        {/*{!isObjectEmpty(order) && (*/}
-        <>
-          <div className="text-white text-xl font-semibold ml-4 pb-2 text-center mt-4">
-            Station details
-          </div>
-          <div className="flex flex-col bg-slate-200 p-4 rounded-xl shadow-md sm:space-y-8">
-            <div className="flex lg:flex-row flex-col lg:justify-around lg:space-y-0 sm:space-y-4">
-              <div className="flex flex-1 sm:flex-row flex-col">
-                {/*<RowData label="Address" value={order.address} />*/}
-                {/*<RowData label="City" value={order.city} />*/}
-              </div>
-              <div className="flex flex-1 sm:flex-row flex-col">
-                {/*<RowData label="ZIP code" value={order.zip_code} />*/}
-                {/*<RowData label="Delivery time" value={order.delivery_time} />*/}
-              </div>
+        {!isObjectEmpty(station) && (
+          <>
+            <div className="text-white text-xl font-semibold ml-4 pb-2 text-center mt-4">
+              Station details
             </div>
-            <div className="flex lg:flex-row flex-col lg:justify-around lg:space-y-0 sm:space-y-4">
-              <div className="flex flex-1 sm:flex-row flex-col">
-                {/*<RowData*/}
-                {/*    label="Payment method"*/}
-                {/*    value={order.payment_method}*/}
-                {/*/>*/}
-                {/*<RowData*/}
-                {/*  label="Total amount"*/}
-                {/*  value={amountFormatter(order.total_amount)}*/}
-                {/*/>*/}
+            <div className="flex flex-col bg-slate-200 p-4 rounded-xl shadow-md sm:space-y-8">
+              <div className="flex lg:flex-row flex-col lg:justify-around lg:space-y-0 sm:space-y-4">
+                <div className="flex flex-1 sm:flex-row flex-col">
+                  <RowData label="Name" value={station.name} />
+                  <RowData label="Address" value={station.address} />
+                </div>
+                <div className="flex flex-1 sm:flex-row flex-col">
+                  <RowData label="Latitude" value={station.latitude} />
+                  <RowData label="Longitude" value={station.longitude} />
+                </div>
               </div>
-              <div className="flex flex-1 sm:flex-row flex-col">
-                {/*<RowData*/}
-                {/*    label="Status"*/}
-                {/*    value={<OrderStatusBadge status={order.status} />}*/}
-                {/*/>*/}
-                {/*{order.status === "cancelled" ? (*/}
-                {/*    <RowData*/}
-                {/*        label="Description"*/}
-                {/*        value={order.reason}*/}
-                {/*        showBorder={false}*/}
-                {/*    />*/}
-                {/*) : (*/}
-                {/*    <RowData showBorder={false} />*/}
-                {/*)}*/}
-              </div>
+              {/*<div className="flex lg:flex-row flex-col lg:justify-around lg:space-y-0 sm:space-y-4">*/}
+              {/*<div className="flex flex-1 sm:flex-row flex-col">*/}
+              {/*<RowData*/}
+              {/*    label="Payment method"*/}
+              {/*    value={order.payment_method}*/}
+              {/*/>*/}
+              {/*<RowData*/}
+              {/*  label="Total amount"*/}
+              {/*  value={amountFormatter(order.total_amount)}*/}
+              {/*/>*/}
+              {/*</div>*/}
+              {/*</div>*/}
             </div>
-            <div className="flex lg:flex-row flex-col lg:justify-around lg:space-y-0 sm:space-y-4">
-              <div className="flex flex-1 sm:flex-row flex-col">
-                <RowData label="Email" value={123} />
-                <RowData label="Full name" value={123} />
-              </div>
-              <div className="flex flex-1 sm:flex-row flex-col">
-                <RowData label="Phone number" value={123123} />
-                <RowData showBorder={false} />
-              </div>
-            </div>
-          </div>
-        </>
-        {/*)}*/}
+          </>
+        )}
         <div className="flex flex-col mt-8 w-full">
           <div className="text-white text-center text-xl font-semibold ml-4 pb-2">
             Charge points
@@ -225,7 +187,7 @@ const StationDetailsView = ({ id }) => {
                 selectedRows={selectedRows}
                 setSelectedRows={setSelectedRows}
                 getData={getStationDetails}
-                dependencies={[id]}
+                dependencies={[id, updated]}
                 buttons={[
                   <AddButton
                     key="addButton"
@@ -243,6 +205,8 @@ const StationDetailsView = ({ id }) => {
         <AddChargePointPopUp
           addPopUp={addPopUp}
           setAddPopUp={setAddPopUp}
+          merchantId={merchant.id}
+          stationId={id}
           onSuccess={updateData}
         />
       )}
@@ -251,6 +215,8 @@ const StationDetailsView = ({ id }) => {
           station={selectedRow}
           editPopUp={editPopUp}
           setEditPopUp={setEditPopUp}
+          merchantId={merchant.id}
+          stationId={id}
           onSuccess={updateData}
         />
       )}
@@ -259,6 +225,18 @@ const StationDetailsView = ({ id }) => {
           deletePopUp={deletePopUp}
           setDeletePopUp={setDeletePopUp}
           selectedRow={selectedRow}
+          merchantId={merchant.id}
+          stationId={id}
+          onSuccess={updateData}
+        />
+      )}
+      {openChangeStatusPopUp && selectedRow && (
+        <ChangeChargePointStatusPopUp
+          changeStatusPopUp={openChangeStatusPopUp}
+          setChangeStatusPopUp={setOpenChangeStatusPopUp}
+          selectedRow={selectedRow}
+          merchantId={merchant.id}
+          stationId={id}
           onSuccess={updateData}
         />
       )}

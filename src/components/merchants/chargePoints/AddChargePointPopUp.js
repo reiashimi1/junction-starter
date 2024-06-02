@@ -10,19 +10,23 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "@/app/GlobalRedux/Features/toastSlice";
-import stationValidator from "@/helpers/validators/stationValidator";
 import API from "@/helpers/APIServices/API";
-import { socketOptions, speedOptions } from "@/helpers/constants";
+import { socketOptions } from "@/helpers/constants";
 import SelectInput from "@/core/inputs/SelectInput";
+import chargePointValidator from "@/helpers/validators/chargePointValidator";
 
-const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+const AddChargePointPopUp = ({
+  addPopUp,
+  setAddPopUp,
+  merchantId,
+  stationId,
+  onSuccess,
+}) => {
+  const [type, setType] = useState("");
   const [speed, setSpeed] = useState("");
   const [price, setPrice] = useState("");
   const [dynamicPrice, setDynamicPrice] = useState("");
   const [requests, setRequests] = useState("");
-  const [socket, setSocket] = useState("");
 
   const dispatch = useDispatch();
   const { clearError, getError, validateErrors } = useValidate();
@@ -30,21 +34,25 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
   const addProduct = () => {
     const errors = validateErrors(
       {
-        name,
-        description,
-        speed,
+        type,
+        // speed,
         price,
-        dynamicPrice,
-        requests,
+        // dynamicPrice,
+        // requests,
       },
-      stationValidator,
+      chargePointValidator,
     );
     if (errors) {
       return;
     }
-    const payload = { name, description };
+    const payload = {
+      type,
+      price: Number(price),
+      dynamicPrice: Number(dynamicPrice),
+      requests: Number(dynamicPrice),
+    };
     dispatch(showLoader("Please wait"));
-    API.post("/api/station", payload)
+    API.post(`/merchants/${merchantId}/stations/${stationId}/ports`, payload)
       .then(() => {
         dispatch(showSuccessToast("Charge point added successfully"));
         onSuccess();
@@ -69,50 +77,25 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
     >
       <div className="flex flex-col space-y-8">
         <div className="flex sm:flex-row flex-col justify-between sm:space-x-4 sm:space-y-0 space-y-4">
+          <SelectInput
+            label="Type"
+            value={type}
+            onChange={setType}
+            id="type"
+            items={socketOptions}
+            minWidth="300"
+            className="flex flex-1"
+          />
           <CustomInput
-            label="Name"
-            placeholder="Enter name"
-            handleChange={(value) => clearError("name", value, setName)}
-            value={name}
-            error={getError("name")}
+            label="Price"
+            type="number"
+            placeholder="Enter starting price"
+            handleChange={(value) => clearError("price", value, setPrice)}
+            value={price}
+            error={getError("price")}
+            className="flex-1"
             required
-            className="flex-1"
           />
-          <CustomInput
-            label="Description"
-            placeholder="Enter description"
-            handleChange={(value) =>
-              clearError("description", value, setDescription)
-            }
-            value={description}
-            error={getError("description")}
-            multiline
-            className="flex-1"
-          />
-        </div>
-        <div className="flex md:flex-row flex-col justify-between md:space-x-4">
-          <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 sm:space-y-0 space-y-4 md:mt-0 -mt-2">
-            <SelectInput
-              label="Speed"
-              value={speed}
-              onChange={setSpeed}
-              id="speed"
-              items={speedOptions}
-              minWidth="300"
-              required
-              className="flex flex-1"
-            />
-            <CustomInput
-              label="price"
-              type="number"
-              placeholder="Enter starting price"
-              handleChange={(value) => clearError("price", value, setPrice)}
-              value={price}
-              error={getError("price")}
-              className="flex-1"
-              required
-            />
-          </div>
         </div>
         <div className="flex sm:flex-row flex-col w-full justify-between sm:space-x-2 pb-4 sm:space-y-0 space-y-4 sm:pt-0 -pt-2">
           <CustomInput
@@ -124,7 +107,7 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
             }
             value={dynamicPrice}
             error={getError("dynamicPrice")}
-            required
+            // required
             className="flex-1"
           />
           <CustomInput
@@ -135,19 +118,19 @@ const AddChargePointPopUp = ({ addPopUp, setAddPopUp, onSuccess }) => {
             value={requests}
             error={getError("requests")}
             className="flex-1"
-            required
+            // required
           />
         </div>
-        <SelectInput
-          label="Socket"
-          value={socket}
-          onChange={setSocket}
-          id="socket"
-          items={socketOptions}
-          minWidth="300"
-          required
-          className="flex flex-1"
-        />
+        {/*<SelectInput*/}
+        {/*  label="Socket"*/}
+        {/*  value={socket}*/}
+        {/*  onChange={setSocket}*/}
+        {/*  id="socket"*/}
+        {/*  items={socketOptions}*/}
+        {/*  minWidth="300"*/}
+        {/*  required*/}
+        {/*  className="flex flex-1"*/}
+        {/*/>*/}
       </div>
     </FormPopUp>
   );
