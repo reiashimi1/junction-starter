@@ -25,7 +25,9 @@ const MainPageView = () => {
         <div className="flex inset-0 z-10">
           <BottomMenu changeScreen={setScreen} />
         </div>
-        {screen === 0 && <MapComponent />}
+        <div className={screen === 0 ? "block" : "hidden"}>
+          <MapComponent />
+        </div>
         {screen === 1 && <LandingCard />}
         {screen === 2 && <AccountView />}
       </>

@@ -112,6 +112,8 @@ const MapComponent = () => {
     setDestinations([closestLocation]);
   };
 
+  console.log(directionsResults);
+
   return (
     <>
       <div>
@@ -144,11 +146,10 @@ const MapComponent = () => {
                     </div>
                     <Button
                       color="error"
-                      onClick={() =>
-                        setDirectionsResults(
-                          Array(destinations.length).fill(null),
-                        )
-                      }
+                      onClick={() => {
+                        setDestinations([]);
+                        setDirectionsResults([]);
+                      }}
                     >
                       Clear
                     </Button>
