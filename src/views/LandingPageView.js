@@ -35,9 +35,9 @@ const LandingPageView = () => {
     <Layout>
       <LandingCard />
       <OffersCard />
-      <DiscountProducts products={topDiscountProducts} />
-      <BestSellerProducts products={topProducts} />
-      <LastStockProducts products={lowStockProducts} />
+      {/*<DiscountProducts products={topDiscountProducts} />*/}
+      {/*<BestSellerProducts products={topProducts} />*/}
+      {/*<LastStockProducts products={lowStockProducts} />*/}
       <DontWait />
       <Footer />
     </Layout>

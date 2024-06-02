@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card as MuiCard,
   CardContent,
@@ -100,6 +100,8 @@ const Card = ({
   cardHolder = "John Doe",
   expiryDate = "12/23",
 }) => {
+  const [chargePopUp, setChargePopUp] = useState(false);
+
   return (
     <>
       <CreditCard>
@@ -124,7 +126,10 @@ const Card = ({
                 200$
               </LargeTypography>
               <LargeIconButton color="primary" aria-label="recharge">
-                <AddCircleOutline fontSize="large" />
+                <AddCircleOutline
+                  fontSize="large"
+                  onClick={() => setChargePopUp(true)}
+                />
               </LargeIconButton>
             </Box>
           </Box>
@@ -132,9 +137,6 @@ const Card = ({
       </CreditCard>
 
       <FormContainer>
-        <Typography variant="h6" gutterBottom>
-          User Points and Referral Code
-        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -159,7 +161,7 @@ const Card = ({
             />
           </Grid>
         </Grid>
-        <UserCartView />
+        <UserCartView open={chargePopUp} setOpen={setChargePopUp} />
       </FormContainer>
     </>
   );

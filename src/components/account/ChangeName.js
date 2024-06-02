@@ -14,6 +14,7 @@ import {
 
 const ChangeName = ({ email, name, phoneNumber, onSuccess }) => {
   const [fullName, setFullName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
 
   const dispatch = useDispatch();
   const { clearError, getError, validateErrors } = useValidate();
@@ -25,7 +26,7 @@ const ChangeName = ({ email, name, phoneNumber, onSuccess }) => {
     }
     const payload = { name: fullName, email };
     dispatch(showLoader("Please wait..."));
-    API.post("/api/user/update-profile", payload)
+    API.post("/user/update", payload)
       .then(() => {
         onSuccess(fullName, email, phoneNumber);
         dispatch(showSuccessToast("Name changed successfully"));
@@ -51,6 +52,15 @@ const ChangeName = ({ email, name, phoneNumber, onSuccess }) => {
         handleChange={(value) => clearError("name", value, setFullName)}
         error={getError("name")}
         value={fullName}
+        className="md:flex-1 mb-5 w-full"
+      />
+      <CustomInput
+        label="Email"
+        placeholder="Change email"
+        handleChange={(value) => clearError("email", value, setNewEmail)}
+        value={newEmail}
+        error={getError("email")}
+        type="email"
         className="md:flex-1 mb-5 w-full"
       />
       <div className="flex justify-end mt-8">
