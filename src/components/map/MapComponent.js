@@ -10,6 +10,7 @@ import MapFilter from "@/views/user/MapFilter";
 import SearchInput from "@/core/inputs/SearchInput";
 import BottomMenu from "@/components/users/BottomMenu";
 import AccountView from "@/views/AccountView";
+import LandingCard from "@/components/landingPage/LandingCard";
 
 const locations = [
   { id: 1, lat: 41.3192252, lng: 19.9220685 },
@@ -26,7 +27,7 @@ const MapComponent = () => {
   const [destinations, setDestinations] = useState([]);
   const [origin, setOrigin] = useState({});
   const [qs, setQs] = useState("");
-  const [screen, setScreen] = useState(2);
+  const [screen, setScreen] = useState(1);
 
   const apiKey = "AIzaSyD2yZzE4Nuo0_vYAhCamFdxmv_Pujo-4vU";
 
@@ -145,7 +146,7 @@ const MapComponent = () => {
           </LoadScript>
         </div>
       </div>
-      {screen === 1 && }
+      {screen === 1 && <LandingCard />}
       {screen === 2 && <AccountView />}
     </>
   );

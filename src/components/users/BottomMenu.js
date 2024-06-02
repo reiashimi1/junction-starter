@@ -3,7 +3,7 @@ import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { Home, AccountCircle, KeyboardVoiceSharp } from "@mui/icons-material";
 
 const BottomMenu = ({ changeScreen }) => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   return (
     <BottomNavigation
