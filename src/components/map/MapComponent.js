@@ -97,7 +97,7 @@ const MapComponent = () => {
     }
   }, [origin, destinations]);
 
-  console.log(screen);
+  // console.log(screen);
 
   return (
     <>

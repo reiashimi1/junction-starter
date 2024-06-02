@@ -14,8 +14,7 @@ const LandingCard = () => {
   const [finalTranscript, setFinalTranscript] = useState("");
 
   useEffect(() => {
-    const recognition = new (window.SpeechRecognition ||
-      window.webkitSpeechRecognition)();
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     recognition.continuous = true;
     recognition.interimResults = true;
     recognition.lang = "en-US";
@@ -34,19 +33,23 @@ const LandingCard = () => {
           ]);
         } else {
           interimTranscript += event.results[i][0].transcript;
-          console.log(interimTranscript);
         }
       }
-      console.log(interimTranscript);
-
-      const correctedTranscript = processTranscripts(interimTranscript);
-      // console.log('Corrected Transcript:', correctedTranscript);
-
-      // Redirect if the corrected transcript contains the word "charge"
-      if (correctedTranscript.includes("charge")) {
-        // Handle navigation to the charging station
-        // handleNavigationToChargingStation();
-      }
+      const correctedTranscript = String(interimTranscript).toLocaleLowerCase();
+      setTimeout(() => {
+        if (correctedTranscript.includes("fast charge")) {
+          
+          console.log("FastCharge detected");
+          // Handle FastCharge logic
+        } else if (correctedTranscript.includes("low cost")) {
+          console.log("low cost detected");
+          // Handle low cost logic
+        }
+        else if (correctedTranscript.includes("charge")) {
+          console.log("normal charge");
+          // Handle low cost logic
+        }
+      }, 300); // 0.8s delay
     };
 
     if (isListening) {
@@ -70,33 +73,9 @@ const LandingCard = () => {
     setIsListening(true);
   };
 
-  const processTranscripts = (text) => {
-    // List of similar-sounding words to "charge"
-    const similarWords = [
-      /charg/gi,
-      /charj/gi,
-      /chrg/gi,
-      /chargeing/gi,
-      /chargin/gi,
-      /charj/gi,
-      /chargeing/gi,
-      /chargin/gi,
-    ];
 
-    // Replace similar-sounding words with "charge"
-    let correctedText = text;
-    similarWords.forEach((pattern) => {
-      correctedText = correctedText.replace(pattern, "charge");
-    });
-    console.log(correctedText);
-    return correctedText;
-  };
+  
 
-  const handleNavigationToChargingStation = () => {
-    // Implement your navigation logic here
-    console.log("Navigating to the charging station page");
-    // router.push('/charging-station');
-  };
 
   useEffect(() => {
     if (!isListening) {
@@ -105,24 +84,11 @@ const LandingCard = () => {
   }, []);
 
   return (
-    <div className="pt-20 p-5 flex flex-col mx-auto justify-center  text-white">
+    <div className="pt-20 p-5 flex flex-col mx-auto justify-center text-white">
       <div className="flex sm:flex-row flex-col justify-around items-center space-x-10 mx-auto 2xl:max-w-7xl xl:max-w-5xl lg:max-w-4xl max-w-2xl md:p-8 p-4">
         <div className="flex flex-col flex-1">
           <div className="mt-4 flex justify-center">
-            {/*<button*/}
-            {/*  onClick={handleSpeechRecognition}*/}
-            {/*  className="px-4 py-3 rounded-xl bg-blue-900 hover:bg-gradient-to-r hover:from-blue-800 hover:to-black shadow-xl hover:scale-105"*/}
-            {/*>*/}
-            {/*  {isListening ? "Stop Listening" : "Start Listening"}*/}
-            {/*</button>*/}
-          </div>
-          <div className="mt-4 flex justify-center">
-            <button
-              onClick={processTranscripts}
-              className="px-4 py-3 rounded-xl bg-green-900 hover:bg-gradient-to-r hover:from-green-800 hover:to-black shadow-xl hover:scale-105"
-            >
-              Process Transcripts
-            </button>
+         
             {transcripts}
           </div>
         </div>
