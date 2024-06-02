@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import LandingPageViewTest from "@/views/test/LandingPageViewTest";
 
 const LoginSpinner = () => {
   const show = useSelector((state) => state.loginSpinner.show);
@@ -18,7 +19,7 @@ const LoginSpinner = () => {
       }}
     >
       <span className="text-white flex flex-col items-center relative text-center">
-        <div className="animate-bounce text-xl uppercase">HEREEE</div>
+        <LandingPageViewTest />
       </span>
     </div>
   );
