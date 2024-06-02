@@ -48,6 +48,12 @@ const MapMarker = ({location, setDestination}) => {
     return (
         <>
             <Marker
+                icon={{
+                    url: location.status === 'available'
+                        ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMxNmEzNGEiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIj48cGF0aCBmaWxsPSIjMTZhMzRhIiBkPSJNMzIgMUMxOS43NDUgMSAxMCAxMC43NDUgMTAgMjNjMCA4LjgzNyA1LjczIDE2LjI4MyAxMy42NjQgMjAuMDg5TDMyIDYzbDguMzM2LTE5LjkxMUM0OC4yNyAzOS4yODMgNTQgMzEuODM3IDU0IDIzIDU0IDEwLjc0NSA0NC4yNTUgMSAzMiAxeiIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMjMiIHI9IjEwIiBmaWxsPSIjMTY2NTM0Ii8+PC9nPjwvc3ZnPgo='
+                        : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNlZjQ0NDQiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIj48cGF0aCBmaWxsPSIjZWY0NDQ0IiBkPSJNMzIgMUMxOS43NDUgMSAxMCAxMC43NDUgMTAgMjNjMCA4LjgzNyA1LjczIDE2LjI4MyAxMy42NjQgMjAuMDg5TDMyIDYzbDguMzM2LTE5LjkxMUM0OC4yNyAzOS4yODMgNTQgMzEuODM3IDU0IDIzIDU0IDEwLjc0NSA0NC4yNTUgMSAzMiAxeiIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMjMiIHI9IjEwIiBmaWxsPSIjOTkxYjFiIi8+PC9nPjwvc3ZnPgo=',
+                    scaledSize: { width: 40, height: 40 }
+                }}
                 key={location.id}
                 position={{lat: location.lat, lng: location.lng}}
                 onClick={seePorts}
