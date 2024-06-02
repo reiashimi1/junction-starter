@@ -10,6 +10,7 @@ import {
   showLoginSpinner,
 } from "@/app/GlobalRedux/Features/loginSpinnerSlice";
 import { useDispatch } from "react-redux";
+import LoginSpinner from "@/layouts/LoginSpinner";
 
 const MainPageView = () => {
   const [screen, setScreen] = useState(0);
@@ -42,7 +43,7 @@ const MainPageView = () => {
         {screen === 1 && <LandingCard onCharge={onCharge} />}
         {screen === 2 && <AccountView />}
       </>
-      {/*<LoginSpinner />*/}
+      <LoginSpinner />
     </div>
   );
 };
