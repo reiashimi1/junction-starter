@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { isObjectEmpty } from "@/helpers/functions";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoader } from "@/app/GlobalRedux/Features/loaderSlice";
+import MapComponent from "@/components/map/MapComponent";
 
 const LandingCard = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const LandingCard = () => {
     <div className="pt-20 p-5 flex flex-col mx-auto justify-center bg-gradient-to-b from-midnightBlue-800 to-darkMagneta-600 text-white">
       <div className="flex sm:flex-row flex-col justify-around items-center space-x-10 mx-auto 2xl:max-w-7xl xl:max-w-5xl lg:max-w-4xl max-w-2xl md:p-8 p-4">
         <div className="flex flex-col flex-1">
+          <MapComponent />
           <h1 className="text-7xl font-bold mb-4 italic text-orange-600 uppercase">
             Lorem Ipsum
           </h1>
