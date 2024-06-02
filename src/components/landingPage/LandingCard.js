@@ -5,7 +5,7 @@ import Lottie from "@/core/Lottie";
 import microphoneLottie from "@/images/microphone.json";
 import * as React from "react";
 
-const LandingCard = () => {
+const LandingCard = ({onCharge}) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ const LandingCard = () => {
       const correctedTranscript = String(interimTranscript).toLocaleLowerCase();
       setTimeout(() => {
         if (correctedTranscript.includes("fast charge")) {
-          
+
           console.log("FastCharge detected");
           // Handle FastCharge logic
         } else if (correctedTranscript.includes("low cost")) {
@@ -47,6 +47,7 @@ const LandingCard = () => {
         }
         else if (correctedTranscript.includes("charge")) {
           console.log("normal charge");
+          onCharge();
           // Handle low cost logic
         }
       }, 300); // 0.8s delay
@@ -74,7 +75,7 @@ const LandingCard = () => {
   };
 
 
-  
+
 
 
   useEffect(() => {
@@ -88,7 +89,7 @@ const LandingCard = () => {
       <div className="flex sm:flex-row flex-col justify-around items-center space-x-10 mx-auto 2xl:max-w-7xl xl:max-w-5xl lg:max-w-4xl max-w-2xl md:p-8 p-4">
         <div className="flex flex-col flex-1">
           <div className="mt-4 flex justify-center">
-         
+
             {transcripts}
           </div>
         </div>

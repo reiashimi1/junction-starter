@@ -42,7 +42,7 @@ const FireNav = styled(List)({
   },
 });
 
-const CustomizedList = () => {
+const CustomizedList = ({type, setType}) => {
   const [open, setOpen] = useState(false);
   const connectors = [
     { name: "CCS", icon: <Power /> },
@@ -128,6 +128,8 @@ const CustomizedList = () => {
                           sx={{ marginLeft: 1 }}
                           aria-labelledby="demo-row-radio-buttons-group-label"
                           name="row-radio-buttons-group"
+                          value={type}
+                          onChange={setType}
                         >
                           <FormControlLabel
                             value="all"
