@@ -13,8 +13,13 @@ import { useDispatch } from "react-redux";
 
 const MainPageView = () => {
   const [screen, setScreen] = useState(0);
+  const [chargeEvent, setChargeEvent] = useState(false);
 
   const dispatch = useDispatch();
+
+  const onCharge = () => {
+    setChargeEvent(true);
+  }
 
   useEffect(() => {
     dispatch(showLoginSpinner());
@@ -32,9 +37,9 @@ const MainPageView = () => {
           <BottomMenu changeScreen={setScreen} />
         </div>
         <div className={screen === 0 ? "block" : "hidden"}>
-          <MapComponent />
+          <MapComponent normalCharge={chargeEvent} />
         </div>
-        {screen === 1 && <LandingCard />}
+        {screen === 1 && <LandingCard onCharge={onCharge} />}
         {screen === 2 && <AccountView />}
       </>
       {/*<LoginSpinner />*/}
